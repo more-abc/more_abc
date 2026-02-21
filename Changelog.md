@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.5] - 2026-02-21
+    - Adding `License.md` with MIT License.
+    - Filling in `README.md` with module description and license reference.
+    - Bump version to `0.0.5`.
+
 ## [0.0.4] - 2026-02-21
     - Adding `ABCMixin` — ABC Mixin base class with abstract methods.
     - Adding `ABCclassType` and `ABCMetaclassType`.
