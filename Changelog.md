@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.3] - 2026-02-22
+    - Adding `ABCCompat` wrapper that re-exports all public `abc` symbols (`ABC`, `ABCMeta`, `abstractmethod`, `abstractproperty`, `get_cache_token`).
+    - Adding `PY_VERSION` constant.
+    - Updating `__all__` to include re-exported `abc` symbols.
+    - Bump version to `0.2.3`.
+
 ## [0.2.2] - 2026-02-22
     - Improving `__main__.py` with `argparse`-based CLI (`-v`/`--version`, `-l`/`--list`, `-h`/`--help`).
     - Bump version to `0.2.2`.

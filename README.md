@@ -160,3 +160,28 @@ def accepts_abc_class(cls: ABCclassType):
 
 accepts_abc_class(ABC)
 ```
+
+### abc re-exports
+
+`more_abc` re-exports all public symbols from the standard `abc` module, so you can use it as a single import for everything ABC-related.
+
+```python
+# Instead of:
+from abc import ABC, ABCMeta, abstractmethod
+from more_abc import ABCMixin, abc_dataclass
+
+# You can do:
+from more_abc import ABC, ABCMeta, abstractmethod, ABCMixin, abc_dataclass
+```
+
+Available re-exports: `ABC`, `ABCMeta`, `abstractmethod`, `abstractproperty`, `get_cache_token`.
+
+## CLI
+
+`more_abc` ships a small command-line interface:
+
+```bash
+python -m more_abc            # show help
+python -m more_abc --version  # print version
+python -m more_abc --list     # list all public symbols
+```

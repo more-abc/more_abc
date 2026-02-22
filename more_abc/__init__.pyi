@@ -1,3 +1,8 @@
+from abc import (ABC as ABC,
+                 ABCMeta as ABCMeta,
+                 abstractmethod as abstractmethod,
+                 abstractproperty as abstractproperty,
+                 get_cache_token as get_cache_token)
 from .more import (ABCMixin,
                    ABCclassType,
                    ABCMetaclassType,
@@ -14,6 +19,12 @@ __all__ = ["ABCMixin",
            "abc_dataclass",
            "ABCEnumMeta",
            "AbcEnum",
+           # re-exported from abc
+           "ABC",
+           "ABCMeta",
+           "abstractmethod",
+           "abstractproperty",
+           "get_cache_token",
            "version"]
 
 __version__: str
