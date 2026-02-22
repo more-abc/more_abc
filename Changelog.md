@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.4] - 2026-02-22
+    - Adding `-d`/`--doc SYMBOL` CLI argument to print a symbol's docstring.
+    - Adding `__doc__` to module and `ABCCompat` class.
+    - Adding code examples to README CLI section.
+    - Bump version to `0.2.4`.
+
 ## [0.2.3] - 2026-02-22
     - Adding `ABCCompat` wrapper that re-exports all public `abc` symbols (`ABC`, `ABCMeta`, `abstractmethod`, `abstractproperty`, `get_cache_token`).
     - Adding `PY_VERSION` constant.

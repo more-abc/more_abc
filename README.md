@@ -184,4 +184,32 @@ Available re-exports: `ABC`, `ABCMeta`, `abstractmethod`, `abstractproperty`, `g
 python -m more_abc            # show help
 python -m more_abc --version  # print version
 python -m more_abc --list     # list all public symbols
+python -m more_abc --doc ABCMixin        # print docstring of ABCMixin
+python -m more_abc --doc abstractmethod  # print docstring of abstractmethod
+python -m more_abc -d AbcEnum            # short form
+```
+
+Example output of `--doc`:
+
+```
+$ python -m more_abc --doc ABCMixin
+A comprehensive ABC Mixin class that provides abstract method patterns
+and utility methods for subclasses.
+
+This mixin enforces implementation of core methods while providing
+common functionality that works with those abstract methods.
+```
+
+```
+$ python -m more_abc --doc abstractmethod
+A decorator indicating abstract methods.
+
+Requires that the metaclass is ABCMeta or derived from it.  A
+class that has a metaclass derived from ABCMeta cannot be
+instantiated unless all of its abstract methods and abstract
+properties are overridden.  The abstract methods can be called
+using any of the normal 'super' call mechanisms.  abstractmethod()
+may be used to declare abstract methods for properties and
+descriptors.
+...
 ```

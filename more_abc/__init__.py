@@ -74,7 +74,7 @@ __all__ = ["ABCMixin",
            "get_cache_token",
            "version"]
 
-__version__ = "0.2.3"
+__version__ = "0.2.4"
 version = __version__
 
 # Wrapper of the abc module that is compatible with Python
