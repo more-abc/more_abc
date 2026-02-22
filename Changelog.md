@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.2] - 2026-02-22
+    - Adding code examples to `README.md`.
+    - Bump version to `0.1.2`.
+
 ## [0.1.1] - 2026-02-22
     - Adding `more.pyi`.
     - Adding `__main__.pyi`.
