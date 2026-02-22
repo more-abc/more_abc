@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.2] - 2026-02-22
+    - Improving `__main__.py` with `argparse`-based CLI (`-v`/`--version`, `-l`/`--list`, `-h`/`--help`).
+    - Bump version to `0.2.2`.
+
 ## [0.2.1] - 2026-02-22
     - Adding `abc_enum.py` with `ABCEnumMeta` and `AbcEnum`.
     - Adding `abc_enum.pyi` stub.
