@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.1] - 2026-02-22
+    - Adding `more.pyi`.
+    - Adding `__main__.pyi`.
+    - Adding `__init__pyi`.
+    - Bump version to `0.1.1`.
+
 ## [0.0.5] - 2026-02-21
     - Adding `License.md` with MIT License.
     - Filling in `README.md` with module description and license reference.
