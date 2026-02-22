@@ -27,18 +27,20 @@ This module is an extension of the `abc` module,
 with many similar features added.
 """
 
-from .more import (ABCMixin, 
-                   ABCclassType, 
-                   ABCMetaclassType, 
-                   ABCException, 
+from .more import (ABCMixin,
+                   ABCclassType,
+                   ABCMetaclassType,
+                   ABCException,
                    ABCWarning)
+from .abc_dataclasses import abc_dataclass
 
-__all__ = ["ABCMixin", 
-           "ABCclassType", 
+__all__ = ["ABCMixin",
+           "ABCclassType",
            "ABCMetaclassType",
            "ABCException",
            "ABCWarning",
+           "abc_dataclass",
            "version"]
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 version = __version__

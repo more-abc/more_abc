@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.4] - 2026-02-22
+    - Adding `abc_dataclasses.py` with `abc_dataclass` decorator.
+    - Adding `abc_dataclasses.pyi` stub.
+    - Bump version to `0.1.4`.
+
 ## [0.1.3] - 2026-02-22
     - Adding `py.typed`.
     - Bump version to `0.1.3`.

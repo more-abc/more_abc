@@ -77,6 +77,39 @@ warnings.warn(DeprecatedWarning(cls="OldClass"))
 # DeprecatedWarning: 'OldClass' is deprecated and will be removed in a future version.
 ```
 
+### abc_dataclass
+
+`abc_dataclass` is a drop-in replacement for `@dataclass` that automatically gives the class `ABCMeta` as its metaclass, so you can use `@abstractmethod` without manually inheriting from `ABC`.
+
+```python
+from abc import abstractmethod
+from more_abc import abc_dataclass
+
+@abc_dataclass
+class Shape:
+    color: str
+
+    @abstractmethod
+    def area(self) -> float: ...
+
+@abc_dataclass(frozen=True)
+class Circle(Shape):
+    radius: float
+
+    def area(self) -> float:
+        return 3.14159 * self.radius ** 2
+
+c = Circle(color="red", radius=5.0)
+print(c.area())   # 78.53975
+print(c)          # Circle(color='red', radius=5.0)
+```
+
+Attempting to instantiate an abstract class raises `TypeError` as expected:
+
+```python
+Shape(color="blue")  # TypeError: Can't instantiate abstract class Shape ...
+```
+
 ### Type aliases
 
 `ABCclassType` and `ABCMetaclassType` mirror the pattern from the `types` module.
