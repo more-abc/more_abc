@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.3] - 2026-02-22
+    - Adding `py.typed`.
+    - Bump version to `0.1.3`.
+    
 ## [0.1.2] - 2026-02-22
     - Adding code examples to `README.md`.
     - Bump version to `0.1.2`.
