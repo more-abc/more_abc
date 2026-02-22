@@ -77,6 +77,40 @@ warnings.warn(DeprecatedWarning(cls="OldClass"))
 # DeprecatedWarning: 'OldClass' is deprecated and will be removed in a future version.
 ```
 
+### AbcEnum
+
+`AbcEnum` is an `Enum` base class that supports abstract methods. Use it when you want to define an enum interface that concrete subclasses must implement.
+
+```python
+from abc import abstractmethod
+from more_abc import AbcEnum
+
+class Direction(AbcEnum):
+    NORTH = "N"
+    SOUTH = "S"
+    EAST  = "E"
+    WEST  = "W"
+
+    @abstractmethod
+    def opposite(self) -> "Direction": ...
+
+# Direction.NORTH  →  TypeError: Can't instantiate abstract class Direction …
+
+class CardinalDirection(Direction):
+    NORTH = "N"
+    SOUTH = "S"
+    EAST  = "E"
+    WEST  = "W"
+
+    def opposite(self) -> "CardinalDirection":
+        _opp = {"N": "S", "S": "N", "E": "W", "W": "E"}
+        return CardinalDirection(_opp[self.value])
+
+print(CardinalDirection.NORTH.opposite())  # CardinalDirection.SOUTH
+```
+
+`ABCEnumMeta` is the underlying combined metaclass (`ABCMeta + EnumMeta`) and is available for advanced use cases.
+
 ### abc_dataclass
 
 `abc_dataclass` is a drop-in replacement for `@dataclass` that automatically gives the class `ABCMeta` as its metaclass, so you can use `@abstractmethod` without manually inheriting from `ABC`.

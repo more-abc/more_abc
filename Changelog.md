@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.1] - 2026-02-22
+    - Adding `abc_enum.py` with `ABCEnumMeta` and `AbcEnum`.
+    - Adding `abc_enum.pyi` stub.
+    - Bump version to `0.2.2`.
+
 ## [0.1.4] - 2026-02-22
     - Adding `abc_dataclasses.py` with `abc_dataclass` decorator.
     - Adding `abc_dataclasses.pyi` stub.

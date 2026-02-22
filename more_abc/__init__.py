@@ -33,6 +33,7 @@ from .more import (ABCMixin,
                    ABCException,
                    ABCWarning)
 from .abc_dataclasses import abc_dataclass
+from .abc_enum import ABCEnumMeta, AbcEnum
 
 __all__ = ["ABCMixin",
            "ABCclassType",
@@ -40,7 +41,9 @@ __all__ = ["ABCMixin",
            "ABCException",
            "ABCWarning",
            "abc_dataclass",
+           "ABCEnumMeta",
+           "AbcEnum",
            "version"]
 
-__version__ = "0.1.4"
+__version__ = "0.2.1"
 version = __version__
