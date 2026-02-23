@@ -7,9 +7,6 @@ with many similar features added.
 ![](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
 ![](https://img.shields.io/badge/Status-Active-brightgreen)
 
-This module refers to PEP 3119.
-See [new url](https://peps.python.org/pep-3119/) or [old url](https://legacy.python.org/dev/peps/pep-3119/)
-
 ## Installation
 
 ```bash

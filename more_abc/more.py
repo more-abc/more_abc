@@ -1,4 +1,4 @@
-"""All core functions of the module are contained in this file."""
+"""Core functions (And `types` module like) of the module are contained in this file."""
 
 from abc import ABC, ABCMeta, abstractmethod
 

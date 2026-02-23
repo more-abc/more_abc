@@ -13,6 +13,7 @@ class ABCEnumMeta(ABCMeta, EnumMeta):
     :func:`~abc.abstractmethod`.  You rarely need to use this directly —
     prefer subclassing :class:`AbcEnum` instead.
     """
+    pass
 
 
 class AbcEnum(Enum, metaclass=ABCEnumMeta):
@@ -21,3 +22,4 @@ class AbcEnum(Enum, metaclass=ABCEnumMeta):
     Subclass this instead of :class:`~enum.Enum` when you want to enforce
     that concrete enum subclasses implement certain methods.
     """
+    pass

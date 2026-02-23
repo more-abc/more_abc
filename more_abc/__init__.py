@@ -74,8 +74,9 @@ __all__ = ["ABCMixin",
            "get_cache_token",
            "version"]
 
-__version__ = "0.2.4"
+__version__ = "1.0.0"
 version = __version__
+"""version of `more_abc` module."""
 
 # Wrapper of the abc module that is compatible with Python
 PY_VERSION = sys.version_info[:2]

@@ -4,6 +4,8 @@ __all__ = ["abc_dataclass"]
 
 _T = TypeVar("_T")
 
+def _ensure_abcmeta(cls: type) -> type: ...
+
 @overload
 def abc_dataclass(cls: type[_T], /) -> type[_T]: ...
 @overload

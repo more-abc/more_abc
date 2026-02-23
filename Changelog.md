@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.0] - 2026-02-23
+    - Bump version to `1.0.0` (first stable release).
+    - Added and Fixed some in-bugs.
+
 ## [0.2.4] - 2026-02-22
     - Adding `-d`/`--doc SYMBOL` CLI argument to print a symbol's docstring.
     - Adding `__doc__` to module and `ABCCompat` class.
@@ -19,9 +23,7 @@
 ## [0.2.1] - 2026-02-22
     - Adding `abc_enum.py` with `ABCEnumMeta` and `AbcEnum`.
     - Adding `abc_enum.pyi` stub.
-    - Bump version to `0.2.2`.
-
-## [0.1.4] - 2026-02-22
+    - Bump version to `0.2.1`. - 2026-02-22
     - Adding `abc_dataclasses.py` with `abc_dataclass` decorator.
     - Adding `abc_dataclasses.pyi` stub.
     - Bump version to `0.1.4`.
@@ -37,7 +39,7 @@
 ## [0.1.1] - 2026-02-22
     - Adding `more.pyi`.
     - Adding `__main__.pyi`.
-    - Adding `__init__pyi`.
+    - Adding `__init__.pyi`.
     - Bump version to `0.1.1`.
 
 ## [0.0.5] - 2026-02-21

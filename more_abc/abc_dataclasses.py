@@ -1,9 +1,9 @@
 """This submodule is an extension of the ABC functionality within the `dataclasses` module."""
 
-import dataclasses
+from dataclasses import dataclass
 from abc import ABC, ABCMeta
 
-def _ensure_abcmeta(cls: type) -> type:
+def _ensure_abcmeta(cls):
     """Rebuild *cls* with ABCMeta as its metaclass if it doesn't already use one."""
     if isinstance(cls, ABCMeta):
         return cls
@@ -28,7 +28,7 @@ def abc_dataclass(cls=None, /, **kwargs):
     """
     def wrap(c: type) -> type:
         c = _ensure_abcmeta(c)
-        return dataclasses.dataclass(c, **kwargs)
+        return dataclass(c, **kwargs)
 
     if cls is None:
         return wrap
