@@ -6,11 +6,12 @@ with many similar features added.
 ![License: MIT](https://img.shields.io/badge/License-MIT-%2396DA45?style=for-the-badge&logo=opensourceinitiative&logoColor=white)
 ![](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
 ![](https://img.shields.io/badge/Status-Active-brightgreen)
+[![PyPI Version](https://img.shields.io/pypi/v/more_abc.svg)](https://pypi.org/project/more_abc/)
 
 ## Installation
 
 ```bash
-pip install git+https://github.com/aiwonderland/more_abc.git # not on PyPi yet
+pip install more-abc
 ```
 
 ## Usage

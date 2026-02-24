@@ -105,11 +105,11 @@ __all__ = ["ABCMixin",
            "get_cache_token",
            "version"]
 
-__version__ = "1.0.2"
+__version__ = "2.0.0"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "MIT"
 # Can be development / stable / deprecated
-__status__ = "development"
+__status__ = "stable"
 
 version = __version__
 """version of `more_abc` module."""
