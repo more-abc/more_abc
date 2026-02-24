@@ -227,3 +227,62 @@ from more_abc import ABC, ABCMeta, abstractmethod, ABCMixin, abc_dataclass
 ```
 
 Available re-exports: `ABC`, `ABCMeta`, `abstractmethod`, `abstractproperty`, `get_cache_token`.
+
+### Sortable / Filterable / Transformable
+
+`more_abc.collections_abc` provides three ABC families for custom collection types, each following the same `Base* / *Mixin / *` pattern.
+
+**Sortable** — in-place sorting via `__sort__`:
+
+```python
+from more_abc import Sortable
+
+class NumberList(Sortable):
+    def __init__(self, data: list):
+        self._data = list(data)
+
+    def __sort__(self, reverse=False):
+        self._data.sort(reverse=reverse)
+
+    def __copy__(self):
+        return NumberList(self._data)
+
+nl = NumberList([3, 1, 2])
+nl.sort()                    # in-place: [1, 2, 3]
+asc = nl.sorted(reverse=True)  # new copy: [3, 2, 1]
+```
+
+**Filterable** — predicate filtering via `__filter__`:
+
+```python
+from more_abc import Filterable
+
+class NumberList(Filterable):
+    def __init__(self, data: list):
+        self._data = list(data)
+
+    def __filter__(self, predicate):
+        return NumberList([x for x in self._data if predicate(x)])
+
+nl = NumberList([1, 2, 3, 4, 5])
+evens = nl.filter(lambda x: x % 2 == 0)   # [2, 4]
+odds  = nl.reject(lambda x: x % 2 == 0)   # [1, 3, 5]
+```
+
+**Transformable** — element-wise mapping via `__transform__`:
+
+```python
+from more_abc import Transformable
+
+class NumberList(Transformable):
+    def __init__(self, data: list):
+        self._data = list(data)
+
+    def __transform__(self, func):
+        return NumberList([func(x) for x in self._data])
+
+nl = NumberList([1, 2, 3])
+doubled = nl.map(lambda x: x * 2)  # [2, 4, 6]
+```
+
+`BaseSortable`, `SortableMixin`, `BaseFilterable`, `FilterableMixin`, `BaseTransformable`, and `TransformableMixin` are also exported for advanced composition.

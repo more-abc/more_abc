@@ -11,6 +11,15 @@ from .more import (ABCMixin,
 from .abc_dataclasses import abc_dataclass
 from .abc_enum import ABCEnumMeta, AbcEnum
 from .abc_loogging import AbstractLogFilter, AbstractLogFormatter, AbstractLogHandler
+from .collections_abc import (BaseSortable as BaseSortable,
+                               SortableMixin as SortableMixin,
+                               Sortable as Sortable,
+                               BaseFilterable as BaseFilterable,
+                               FilterableMixin as FilterableMixin,
+                               Filterable as Filterable,
+                               BaseTransformable as BaseTransformable,
+                               TransformableMixin as TransformableMixin,
+                               Transformable as Transformable)
 
 __all__ = ["ABCMixin",
            "ABCclassType",
@@ -23,6 +32,10 @@ __all__ = ["ABCMixin",
            "AbstractLogFilter",
            "AbstractLogFormatter",
            "AbstractLogHandler",
+           # collections_abc
+           "BaseSortable", "SortableMixin", "Sortable",
+           "BaseFilterable", "FilterableMixin", "Filterable",
+           "BaseTransformable", "TransformableMixin", "Transformable",
            # re-exported from abc
            "ABC",
            "ABCMeta",

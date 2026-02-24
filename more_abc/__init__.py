@@ -41,6 +41,17 @@ From this package:
     AbstractLogFormatter  -- abstract base for logging.Formatter
     AbstractLogFilter     -- abstract base for logging.Filter
 
+From :mod:`more_abc.collections_abc`:
+    BaseSortable          -- minimal abstract interface for sortable containers
+    SortableMixin         -- concrete sort()/sorted() helpers
+    Sortable              -- final ABC combining BaseSortable + SortableMixin
+    BaseFilterable        -- minimal abstract interface for filterable containers
+    FilterableMixin       -- concrete filter()/reject() helpers
+    Filterable            -- final ABC combining BaseFilterable + FilterableMixin
+    BaseTransformable     -- minimal abstract interface for transformable containers
+    TransformableMixin    -- concrete map() helper
+    Transformable         -- final ABC combining BaseTransformable + TransformableMixin
+
 Re-exported from :mod:`abc`:
     ABC, ABCMeta, abstractmethod, abstractproperty, get_cache_token
 """
@@ -61,6 +72,9 @@ from .more import (ABCMixin,
 from .abc_dataclasses import abc_dataclass
 from .abc_enum import ABCEnumMeta, AbcEnum
 from .abc_loogging import AbstractLogFilter, AbstractLogFormatter, AbstractLogHandler
+from .collections_abc import (BaseSortable, SortableMixin, Sortable,
+                               BaseFilterable, FilterableMixin, Filterable,
+                               BaseTransformable, TransformableMixin, Transformable)
 
 __all__ = ["ABCMixin",
            "ABCclassType",
@@ -73,6 +87,16 @@ __all__ = ["ABCMixin",
            "AbstractLogFilter",
            "AbstractLogFormatter",
            "AbstractLogHandler",
+           # collections_abc
+           "BaseSortable", 
+           "SortableMixin", 
+           "Sortable",
+           "BaseFilterable", 
+           "FilterableMixin", 
+           "Filterable",
+           "BaseTransformable", 
+           "TransformableMixin", 
+           "Transformable",
            # re-exported from abc
            "ABC",
            "ABCMeta",
@@ -81,7 +105,7 @@ __all__ = ["ABCMixin",
            "get_cache_token",
            "version"]
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "MIT"
 # Can be development / stable / deprecated
