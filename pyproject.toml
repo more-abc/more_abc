@@ -30,7 +30,6 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/aiwonderland/more_abc"
 Repository = "https://github.com/aiwonderland/more_abc"
-Changelog = "https://github.com/aiwonderland/more_abc/blob/master/Changelog.md"
 
 [project.scripts]
 more-abc = "more_abc.__main__:main"

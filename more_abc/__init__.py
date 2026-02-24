@@ -29,14 +29,17 @@ with many similar features added.
 Public symbols
 --------------
 From this package:
-    ABCMixin          -- ABC mixin with abstract initialize/validate/to_dict
-    ABCclassType      -- type alias: type(ABC)
-    ABCMetaclassType  -- type alias: type(ABCMeta)
-    ABCException      -- abstract base for custom exceptions
-    ABCWarning        -- abstract base for custom warnings
-    abc_dataclass     -- @dataclass + ABCMeta combined decorator
-    ABCEnumMeta       -- combined ABCMeta + EnumMeta metaclass
-    AbcEnum           -- Enum base class with abstract-method support
+    ABCMixin              -- ABC mixin with abstract initialize/validate/to_dict
+    ABCclassType          -- type alias: type(ABC)
+    ABCMetaclassType      -- type alias: type(ABCMeta)
+    ABCException          -- abstract base for custom exceptions
+    ABCWarning            -- abstract base for custom warnings
+    abc_dataclass         -- @dataclass + ABCMeta combined decorator
+    ABCEnumMeta           -- combined ABCMeta + EnumMeta metaclass
+    AbcEnum               -- Enum base class with abstract-method support
+    AbstractLogHandler    -- abstract base for logging.Handler
+    AbstractLogFormatter  -- abstract base for logging.Formatter
+    AbstractLogFilter     -- abstract base for logging.Filter
 
 Re-exported from :mod:`abc`:
     ABC, ABCMeta, abstractmethod, abstractproperty, get_cache_token
@@ -57,6 +60,7 @@ from .more import (ABCMixin,
                    ABCWarning)
 from .abc_dataclasses import abc_dataclass
 from .abc_enum import ABCEnumMeta, AbcEnum
+from .abc_loogging import AbstractLogFilter, AbstractLogFormatter, AbstractLogHandler
 
 __all__ = ["ABCMixin",
            "ABCclassType",
@@ -66,6 +70,9 @@ __all__ = ["ABCMixin",
            "abc_dataclass",
            "ABCEnumMeta",
            "AbcEnum",
+           "AbstractLogFilter",
+           "AbstractLogFormatter",
+           "AbstractLogHandler",
            # re-exported from abc
            "ABC",
            "ABCMeta",
@@ -74,7 +81,12 @@ __all__ = ["ABCMixin",
            "get_cache_token",
            "version"]
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
+__author__ = "Evan Yang <quantbit@126.com>"
+__license__ = "MIT"
+# Can be development / stable / deprecated
+__status__ = "development"
+
 version = __version__
 """version of `more_abc` module."""
 

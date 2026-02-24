@@ -10,7 +10,7 @@ with many similar features added.
 ## Installation
 
 ```bash
-pip install git+https://github.com/aiwonderland/more_abc.git
+pip install git+https://github.com/aiwonderland/more_abc.git # not on PyPi yet
 ```
 
 ## Usage
@@ -158,6 +158,61 @@ def accepts_abc_class(cls: ABCclassType):
 accepts_abc_class(ABC)
 ```
 
+### AbstractLogHandler
+
+`AbstractLogHandler` is an abstract base for `logging.Handler`. Subclasses must implement `configure()` and `emit()`. The concrete `close()` method handles thread-safe resource cleanup automatically.
+
+```python
+import logging
+from more_abc import AbstractLogHandler
+
+class PrintHandler(AbstractLogHandler):
+    def configure(self, config: dict) -> None:
+        self._handler_config.update(config)
+
+    def emit(self, record: logging.LogRecord) -> None:
+        print(self.format(record))
+
+handler = PrintHandler(level=logging.DEBUG)
+handler.configure({"prefix": "[LOG]"})
+
+logger = logging.getLogger("demo")
+logger.addHandler(handler)
+logger.warning("something happened")
+```
+
+### AbstractLogFormatter
+
+`AbstractLogFormatter` is an abstract base for `logging.Formatter`. Subclasses must implement `format()`.
+
+```python
+import logging
+from more_abc import AbstractLogFormatter
+
+class UpperFormatter(AbstractLogFormatter):
+    def format(self, record: logging.LogRecord) -> str:
+        return f"[{record.levelname}] {record.getMessage().upper()}"
+
+handler = logging.StreamHandler()
+handler.setFormatter(UpperFormatter())
+```
+
+### AbstractLogFilter
+
+`AbstractLogFilter` is an abstract base for `logging.Filter`. Subclasses must implement `filter()`, returning `True` to allow a record through or `False` to discard it.
+
+```python
+import logging
+from more_abc import AbstractLogFilter
+
+class ErrorOnlyFilter(AbstractLogFilter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        return record.levelno >= logging.ERROR
+
+handler = logging.StreamHandler()
+handler.addFilter(ErrorOnlyFilter())
+```
+
 ### abc re-exports
 
 `more_abc` re-exports all public symbols from the standard `abc` module, so you can use it as a single import for everything ABC-related.
@@ -172,41 +227,3 @@ from more_abc import ABC, ABCMeta, abstractmethod, ABCMixin, abc_dataclass
 ```
 
 Available re-exports: `ABC`, `ABCMeta`, `abstractmethod`, `abstractproperty`, `get_cache_token`.
-
-## CLI
-
-`more_abc` ships a small command-line interface:
-
-```bash
-python -m more_abc            # show help
-python -m more_abc --version  # print version
-python -m more_abc --list     # list all public symbols
-python -m more_abc --doc ABCMixin        # print docstring of ABCMixin
-python -m more_abc --doc abstractmethod  # print docstring of abstractmethod
-python -m more_abc -d AbcEnum            # short form
-```
-
-Example output of `--doc`:
-
-```
-$ python -m more_abc --doc ABCMixin
-A comprehensive ABC Mixin class that provides abstract method patterns
-and utility methods for subclasses.
-
-This mixin enforces implementation of core methods while providing
-common functionality that works with those abstract methods.
-```
-
-```
-$ python -m more_abc --doc abstractmethod
-A decorator indicating abstract methods.
-
-Requires that the metaclass is ABCMeta or derived from it.  A
-class that has a metaclass derived from ABCMeta cannot be
-instantiated unless all of its abstract methods and abstract
-properties are overridden.  The abstract methods can be called
-using any of the normal 'super' call mechanisms.  abstractmethod()
-may be used to declare abstract methods for properties and
-descriptors.
-...
-```

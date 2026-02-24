@@ -10,6 +10,7 @@ from .more import (ABCMixin,
                    ABCWarning)
 from .abc_dataclasses import abc_dataclass
 from .abc_enum import ABCEnumMeta, AbcEnum
+from .abc_loogging import AbstractLogFilter, AbstractLogFormatter, AbstractLogHandler
 
 __all__ = ["ABCMixin",
            "ABCclassType",
@@ -19,6 +20,9 @@ __all__ = ["ABCMixin",
            "abc_dataclass",
            "ABCEnumMeta",
            "AbcEnum",
+           "AbstractLogFilter",
+           "AbstractLogFormatter",
+           "AbstractLogHandler",
            # re-exported from abc
            "ABC",
            "ABCMeta",
@@ -27,5 +31,9 @@ __all__ = ["ABCMixin",
            "get_cache_token",
            "version"]
 
+
+__author__: str
+__license__: str
+__status__: str
 __version__: str
 version = __version__
