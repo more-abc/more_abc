@@ -14,9 +14,9 @@ def _get_version_from_cfg(content):
     cfg = configparser.ConfigParser()
     cfg.read_string(content)
     try:
-        return cfg.get("Version", "version").strip() 
+        return cfg.get("version", "version").strip() 
     except (configparser.NoSectionError, configparser.NoOptionError):
-        print("[Version] section or version field not found in the settings.cfg file.")
+        print("[version] section or version field not found in the settings.cfg file.")
         return None
     
 def _get_latest_version():
