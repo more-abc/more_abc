@@ -4,8 +4,8 @@ This module is an extension of the `abc` module,
 with many similar features added.
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-%2396DA45?style=for-the-badge&logo=opensourceinitiative&logoColor=white)
-![](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
-![](https://img.shields.io/badge/Status-Active-brightgreen)
+![text](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+![text](https://img.shields.io/badge/Status-Active-brightgreen)
 [![PyPI Version](https://img.shields.io/pypi/v/more_abc.svg)](https://pypi.org/project/more_abc/)
 
 ## Installation
@@ -192,8 +192,6 @@ class UnixMode(Mode):
 print(UnixMode.READ.to_octal())              # '0o4'
 print((UnixMode.READ | UnixMode.WRITE) == 6) # True
 ```
-
-
 
 ### abc_dataclass
 
