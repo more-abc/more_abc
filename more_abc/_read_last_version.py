@@ -2,7 +2,7 @@ import requests
 import configparser
 from packaging import version
 
-LATEST_CFG_URL = "https://github.com/more-abc/more_abc/raw/master/settings.cfg"
+LATEST_CFG_URL = "https://raw.githubusercontent.com/more-abc/more_abc/refs/heads/master/more_abc/settings.cfg"
 
 LOCAL_CFG_PATH = "./settings.cfg"
 

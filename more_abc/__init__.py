@@ -102,7 +102,7 @@ __all__ = ["ABCMixin",
             # version of `more_abc` module
            "version"]
 
-__version__ = "2.0.2"
+__version__ = "2.0.3"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "MIT"
 # Can be development / stable / deprecated
