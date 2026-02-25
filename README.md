@@ -109,7 +109,91 @@ print(CardinalDirection.NORTH.opposite())  # CardinalDirection.SOUTH
 
 `ABCEnumMeta` is the underlying combined metaclass (`ABCMeta + EnumMeta`) and is available for advanced use cases.
 
-### abc_dataclass
+### AbcIntEnum
+
+`AbcIntEnum` is an `IntEnum` base class that supports abstract methods. Members compare equal to their integer values.
+
+```python
+from abc import abstractmethod
+from more_abc import AbcIntEnum
+
+class Permission(AbcIntEnum):
+    READ    = 1
+    WRITE   = 2
+    EXECUTE = 4
+
+    @abstractmethod
+    def label(self) -> str: ...
+
+class FilePermission(Permission):
+    READ    = 1
+    WRITE   = 2
+    EXECUTE = 4
+
+    def label(self) -> str:
+        return self.name.lower()
+
+print(FilePermission.READ.label())   # "read"
+print(FilePermission.READ > 0)       # True  (int comparison)
+```
+
+### AbcFlag
+
+`AbcFlag` is a `Flag` base class that supports abstract methods. Members can be combined with bitwise operators.
+
+```python
+from abc import abstractmethod
+from more_abc import AbcFlag
+
+class Access(AbcFlag):
+    READ    = 1
+    WRITE   = 2
+    EXECUTE = 4
+
+    @abstractmethod
+    def describe(self) -> str: ...
+
+class FileAccess(Access):
+    READ    = 1
+    WRITE   = 2
+    EXECUTE = 4
+
+    def describe(self) -> str:
+        return f"FileAccess({self.name})"
+
+rw = FileAccess.READ | FileAccess.WRITE
+print(rw)  # FileAccess.READ|WRITE
+```
+
+### AbcIntFlag
+
+`AbcIntFlag` is an `IntFlag` base class that supports abstract methods. Combines integer semantics with bitwise flag operations.
+
+```python
+from abc import abstractmethod
+from more_abc import AbcIntFlag
+
+class Mode(AbcIntFlag):
+    READ    = 0o4
+    WRITE   = 0o2
+    EXECUTE = 0o1
+
+    @abstractmethod
+    def to_octal(self) -> str: ...
+
+class UnixMode(Mode):
+    READ    = 0o4
+    WRITE   = 0o2
+    EXECUTE = 0o1
+
+    def to_octal(self) -> str:
+        return oct(self.value)
+
+print(UnixMode.READ.to_octal())              # '0o4'
+print((UnixMode.READ | UnixMode.WRITE) == 6) # True
+```
+
+
 
 `abc_dataclass` is a drop-in replacement for `@dataclass` that automatically gives the class `ABCMeta` as its metaclass, so you can use `@abstractmethod` without manually inheriting from `ABC`.
 

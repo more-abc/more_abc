@@ -9,7 +9,7 @@ from .more import (ABCMixin,
                    ABCException,
                    ABCWarning)
 from .abc_dataclasses import abc_dataclass
-from .abc_enum import ABCEnumMeta, AbcEnum
+from .abc_enum import ABCEnumMeta, AbcEnum, AbcIntEnum, AbcFlag, AbcIntFlag
 from .abc_loogging import AbstractLogFilter, AbstractLogFormatter, AbstractLogHandler
 from .collections_abc import (BaseSortable as BaseSortable,
                                SortableMixin as SortableMixin,
@@ -29,6 +29,9 @@ __all__ = ["ABCMixin",
            "abc_dataclass",
            "ABCEnumMeta",
            "AbcEnum",
+           "AbcIntEnum",
+           "AbcFlag",
+           "AbcIntFlag",
            "AbstractLogFilter",
            "AbstractLogFormatter",
            "AbstractLogHandler",
@@ -50,3 +53,6 @@ __license__: str
 __status__: str
 __version__: str
 version = __version__
+
+PY_VERSION: str
+class ABCCompat(object): ...

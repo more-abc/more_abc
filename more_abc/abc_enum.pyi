@@ -1,8 +1,14 @@
 from abc import ABCMeta
-from enum import Enum, EnumMeta
+from enum import Enum, EnumMeta, IntEnum, Flag, IntFlag
 
-__all__ = ["ABCEnumMeta", "AbcEnum"]
+__all__ = ["ABCEnumMeta", "AbcEnum", "AbcIntEnum", "AbcFlag", "AbcIntFlag"]
 
 class ABCEnumMeta(ABCMeta, EnumMeta): ...
 
 class AbcEnum(Enum, metaclass=ABCEnumMeta): ...
+
+class AbcIntEnum(IntEnum, metaclass=ABCEnumMeta): ...
+
+class AbcFlag(Flag, metaclass=ABCEnumMeta): ...
+
+class AbcIntFlag(IntFlag, metaclass=ABCEnumMeta): ...

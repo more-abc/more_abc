@@ -1,9 +1,9 @@
 """This submodule is an extension of the ABC functionality within the `enum` module."""
 
 from abc import ABCMeta
-from enum import Enum, EnumMeta
+from enum import Enum, EnumMeta, IntEnum, Flag, IntFlag
 
-__all__ = ["ABCEnumMeta", "AbcEnum"]
+__all__ = ["ABCEnumMeta", "AbcEnum", "AbcIntEnum", "AbcFlag", "AbcIntFlag"]
 
 
 class ABCEnumMeta(ABCMeta, EnumMeta):
@@ -21,5 +21,32 @@ class AbcEnum(Enum, metaclass=ABCEnumMeta):
 
     Subclass this instead of :class:`~enum.Enum` when you want to enforce
     that concrete enum subclasses implement certain methods.
+    """
+    pass
+
+
+class AbcIntEnum(IntEnum, metaclass=ABCEnumMeta):
+    """An :class:`~enum.IntEnum` base class that supports abstract methods.
+
+    Members compare equal to their integer values, while still allowing
+    abstract-method enforcement via :func:`~abc.abstractmethod`.
+    """
+    pass
+
+
+class AbcFlag(Flag, metaclass=ABCEnumMeta):
+    """A :class:`~enum.Flag` base class that supports abstract methods.
+
+    Supports bitwise combination of members, while still allowing
+    abstract-method enforcement via :func:`~abc.abstractmethod`.
+    """
+    pass
+
+
+class AbcIntFlag(IntFlag, metaclass=ABCEnumMeta):
+    """An :class:`~enum.IntFlag` base class that supports abstract methods.
+
+    Members are integers and support bitwise operations, while still
+    allowing abstract-method enforcement via :func:`~abc.abstractmethod`.
     """
     pass
