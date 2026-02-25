@@ -15,13 +15,21 @@ From this package:
     ABCException          -- abstract base for custom exceptions
     ABCWarning            -- abstract base for custom warnings
     abc_dataclass         -- @dataclass + ABCMeta combined decorator
+    
     ABCEnumMeta           -- combined ABCMeta + EnumMeta metaclass
     AbcEnum               -- Enum base class with abstract-method support
+    AbcIntEnum            -- IntEnum base class with abstract-method support
+    AbcFlag               -- Flag base class with abstract-method support
+    AbcIntFlag            -- IntFlag base class with abstract-method support
+
     AbstractLogHandler    -- abstract base for logging.Handler
     AbstractLogFormatter  -- abstract base for logging.Formatter
     AbstractLogFilter     -- abstract base for logging.Filter
 
-From :mod:`more_abc.collections_abc`:
+    AbstractRawIO         -- abstract base for io.RawIOBase
+    AbstractBufferedIO    -- abstract base for io.BufferedIOBase
+    AbstractTextIO        -- abstract base for io.TextIOBase
+
     BaseSortable          -- minimal abstract interface for sortable containers
     SortableMixin         -- concrete sort()/sorted() helpers
     Sortable              -- final ABC combining BaseSortable + SortableMixin
@@ -52,9 +60,11 @@ from .more import (ABCMixin,
 from .abc_dataclasses import abc_dataclass
 from .abc_enum import ABCEnumMeta, AbcEnum, AbcIntEnum, AbcFlag, AbcIntFlag
 from .abc_loogging import AbstractLogFilter, AbstractLogFormatter, AbstractLogHandler
+from .abc_io import AbstractBufferedIO, AbstractRawIO, AbstractTextIO
 from .collections_abc import (BaseSortable, SortableMixin, Sortable,
                                BaseFilterable, FilterableMixin, Filterable,
                                BaseTransformable, TransformableMixin, Transformable)
+from ._read_last_version import _check_mod_version
 
 __all__ = ["ABCMixin",
            "ABCclassType",
@@ -70,6 +80,9 @@ __all__ = ["ABCMixin",
            "AbstractLogFilter",
            "AbstractLogFormatter",
            "AbstractLogHandler",
+            "AbstractRawIO",
+            "AbstractBufferedIO",
+            "AbstractTextIO",
            # collections_abc
            "BaseSortable", 
            "SortableMixin", 
@@ -86,9 +99,10 @@ __all__ = ["ABCMixin",
            "abstractmethod",
            "abstractproperty",
            "get_cache_token",
+            # version of `more_abc` module
            "version"]
 
-__version__ = "2.0.1"
+__version__ = "2.0.2"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "MIT"
 # Can be development / stable / deprecated

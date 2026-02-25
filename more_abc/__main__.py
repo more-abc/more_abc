@@ -2,7 +2,7 @@ from argparse import ArgumentParser
 import more_abc as _pkg
 
 from . import __all__, version
-from .settings._read_last_version import _check_mod_version
+from ._read_last_version import _check_mod_version
 
 
 def main():

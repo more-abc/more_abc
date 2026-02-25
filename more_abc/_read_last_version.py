@@ -1,5 +1,6 @@
 import requests
 import configparser
+from packaging import version
 
 LATEST_CFG_URL = "https://github.com/more-abc/more_abc/raw/master/settings.cfg"
 
@@ -25,7 +26,7 @@ def _get_latest_version():
         resp.raise_for_status()
         return _get_version_from_cfg(resp.text)
     except Exception as e:
-        print(f"Failed to get remote settings.cfg:{e}")
+        print(f"Failed to get remote settings.cfg: {e}")
         return None
 
 def _get_local_version():
@@ -48,5 +49,5 @@ def _check_mod_version():
     if not latest_ver or not local_ver:
         return
     
-    if latest_ver > local_ver:
+    if version.parse(latest_ver) > version.parse(local_ver):
         print(f"§ notice § The version {local_ver} of more_abc you are currently downloading is not the latest version!")

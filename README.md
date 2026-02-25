@@ -195,6 +195,8 @@ print((UnixMode.READ | UnixMode.WRITE) == 6) # True
 
 
 
+### abc_dataclass
+
 `abc_dataclass` is a drop-in replacement for `@dataclass` that automatically gives the class `ABCMeta` as its metaclass, so you can use `@abstractmethod` without manually inheriting from `ABC`.
 
 ```python
@@ -371,3 +373,94 @@ doubled = nl.map(lambda x: x * 2)  # [2, 4, 6]
 ```
 
 `BaseSortable`, `SortableMixin`, `BaseFilterable`, `FilterableMixin`, `BaseTransformable`, and `TransformableMixin` are also exported for advanced composition.
+
+### AbstractRawIO
+
+`AbstractRawIO` is an abstract base for `io.RawIOBase`. Subclasses must implement `read()`, `readinto()`, and `write()`.
+
+```python
+from more_abc import AbstractRawIO
+
+class MemoryRawIO(AbstractRawIO):
+    def __init__(self, data: bytes):
+        self._buf = bytearray(data)
+        self._pos = 0
+
+    def read(self, size=-1) -> bytes:
+        if size == -1:
+            chunk = bytes(self._buf[self._pos:])
+            self._pos = len(self._buf)
+        else:
+            chunk = bytes(self._buf[self._pos:self._pos + size])
+            self._pos += len(chunk)
+        return chunk
+
+    def readinto(self, b) -> int:
+        data = self.read(len(b))
+        n = len(data)
+        b[:n] = data
+        return n
+
+    def write(self, b) -> int:
+        self._buf[self._pos:self._pos + len(b)] = b
+        self._pos += len(b)
+        return len(b)
+```
+
+### AbstractBufferedIO
+
+`AbstractBufferedIO` is an abstract base for `io.BufferedIOBase`. Subclasses must implement `read()`, `read1()`, and `write()`.
+
+```python
+from more_abc import AbstractBufferedIO
+
+class SimpleBufferedIO(AbstractBufferedIO):
+    def __init__(self, raw: bytes):
+        self._buf = bytearray(raw)
+        self._pos = 0
+
+    def read(self, size=None) -> bytes:
+        if size is None:
+            chunk = bytes(self._buf[self._pos:])
+            self._pos = len(self._buf)
+        else:
+            chunk = bytes(self._buf[self._pos:self._pos + size])
+            self._pos += len(chunk)
+        return chunk
+
+    def read1(self, size=-1) -> bytes:
+        return self.read(size)
+
+    def write(self, b) -> int:
+        self._buf += b
+        return len(b)
+```
+
+### AbstractTextIO
+
+`AbstractTextIO` is an abstract base for `io.TextIOBase`. Subclasses must implement `read()`, `readline()`, and `write()`.
+
+```python
+from more_abc import AbstractTextIO
+
+class StringIO(AbstractTextIO):
+    def __init__(self, text: str = ""):
+        self._lines = text.splitlines(keepends=True)
+        self._pos = 0
+
+    def read(self, size=None) -> str:
+        text = "".join(self._lines[self._pos:])
+        self._pos = len(self._lines)
+        return text if size is None else text[:size]
+
+    def readline(self, size=-1) -> str:
+        if self._pos >= len(self._lines):
+            return ""
+        line = self._lines[self._pos]
+        self._pos += 1
+        return line if size == -1 else line[:size]
+
+    def write(self, s: str) -> int:
+        self._lines.extend(s.splitlines(keepends=True))
+        return len(s)
+```

@@ -3,7 +3,6 @@ Abstract Base Classes (ABCs) for collections, according to PEP 3119.
 This submodule is an extension of the ABC functionality within the `collections.abc` module.
 """
 
-import collections.abc as ca
 import abc
 
 __all__ = [

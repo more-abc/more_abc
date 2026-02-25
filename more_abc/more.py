@@ -80,7 +80,7 @@ class ABCException(Exception, metaclass=ABCMeta):
         super().__init__(self._get_message())
 
     @abstractmethod
-    def _get_message(self) -> str:
+    def _get_message(self):
         """Return the error message. Must be implemented by subclasses."""
         pass
 
@@ -92,7 +92,7 @@ class ABCWarning(Warning, metaclass=ABCMeta):
         super().__init__(self._get_message())
 
     @abstractmethod
-    def _get_message(self) -> str:
+    def _get_message(self):
         """Return the warning message. Must be implemented by subclasses."""
         pass
 # ======================================================================
