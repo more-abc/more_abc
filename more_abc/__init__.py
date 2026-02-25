@@ -64,7 +64,7 @@ from .abc_io import AbstractBufferedIO, AbstractRawIO, AbstractTextIO
 from .collections_abc import (BaseSortable, SortableMixin, Sortable,
                                BaseFilterable, FilterableMixin, Filterable,
                                BaseTransformable, TransformableMixin, Transformable)
-from ._read_last_version import _check_mod_version
+# from ._read_last_version import _check_mod_version
 
 __all__ = ["ABCMixin",
            "ABCclassType",
@@ -102,7 +102,7 @@ __all__ = ["ABCMixin",
             # version of `more_abc` module
            "version"]
 
-__version__ = "2.0.4"
+__version__ = "2.0.5"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "MIT"
 # Can be development / stable / deprecated
@@ -133,3 +133,5 @@ else:
     ABCCompat.ABC = abc.ABC # type: ignore
 
 sys.modules[__name__].__dict__.update(ABCCompat.__dict__)
+
+# _check_mod_version()

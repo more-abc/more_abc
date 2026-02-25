@@ -1,10 +1,12 @@
+import os
 import requests
 import configparser
 from packaging import version
 
 LATEST_CFG_URL = "https://raw.githubusercontent.com/more-abc/more_abc/refs/heads/master/more_abc/settings.cfg"
+# LATEST_CFG_URL = "https://github.com/more-abc/more_abc/raw/master/settings.cfg"
 
-LOCAL_CFG_PATH = "./settings.cfg"
+LOCAL_CFG_PATH = os.path.join(os.path.dirname(__file__), "settings.cfg")
 
 REPO_URL = "https://github.com/more-abc/more_abc"
 
@@ -22,7 +24,7 @@ def _get_version_from_cfg(content):
 def _get_latest_version():
     """Read the `settings.cfg` file from the remote repository to obtain the latest version number."""
     try:
-        resp = requests.get(LATEST_CFG_URL, timeout=5)
+        resp = requests.get(LATEST_CFG_URL, timeout=20)
         resp.raise_for_status()
         return _get_version_from_cfg(resp.text)
     except Exception as e:
