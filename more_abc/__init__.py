@@ -1,5 +1,10 @@
 # Copyright (C) 2026 Evan Yang <quantbit@126.com>
 
+# GNU GENERAL PUBLIC LICENSE
+# Version 3, 29 June 2007
+
+# Copyright (C) [2026] [aiwonderland/more-abc]
+
 # This module refers to PEP 3119.
 # See https://peps.python.org/pep-3119/ or https://legacy.python.org/dev/peps/pep-3119/
 """
@@ -121,7 +126,7 @@ __all__ = ["ABCMixin",
             # version of `more_abc` module
            "version"]
 
-__version__ = "2.1.1"
+__version__ = "2.1.2"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "MIT"
 # Can be development / stable / deprecated
