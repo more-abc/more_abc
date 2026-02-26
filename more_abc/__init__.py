@@ -14,8 +14,9 @@ From this package:
     ABCMetaclassType      -- type alias: type(ABCMeta)
     ABCException          -- abstract base for custom exceptions
     ABCWarning            -- abstract base for custom warnings
-    abstract_class            -- decorator that turns a class into an ABC with specified abstract methods
-    abstractdataclass         -- @dataclass + ABCMeta combined decorator
+    abstract_class        -- decorator that turns a class into an ABC with specified abstract methods
+    abstractproperty      -- decorator that defines an abstract property (read-only or read-write)
+    abstractdataclass     -- @dataclass + ABCMeta combined decorator
     
     ABCEnumMeta           -- combined ABCMeta + EnumMeta metaclass
     ABCEnum               -- Enum base class with abstract-method support
@@ -50,7 +51,7 @@ import abc
 from abc import (ABC,
                  ABCMeta,
                  abstractmethod,
-                 abstractproperty,
+                #  abstractproperty,
                  get_cache_token)
 
 from .more import (ABCMixin,
@@ -58,7 +59,8 @@ from .more import (ABCMixin,
                    ABCMetaclassType,
                    ABCException,
                    ABCWarning,
-                   abstract_class)
+                   abstract_class,
+                   abstractproperty)
 from .abc_dataclasses import abstractdataclass
 from .abc_enum import (ABCEnumMeta, 
                        ABCEnum, 
@@ -86,6 +88,8 @@ __all__ = ["ABCMixin",
            "ABCMetaclassType",
            "ABCException",
            "ABCWarning",
+           "abstract_class",
+           "abstractproperty",
            "abstractdataclass",
            "ABCEnumMeta",
            "ABCEnum",
@@ -112,12 +116,12 @@ __all__ = ["ABCMixin",
            "ABC",
            "ABCMeta",
            "abstractmethod",
-           "abstractproperty",
+        #    "abstractproperty",
            "get_cache_token",
             # version of `more_abc` module
            "version"]
 
-__version__ = "2.1.0"
+__version__ = "2.1.1"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "MIT"
 # Can be development / stable / deprecated

@@ -1,14 +1,15 @@
 from abc import (ABC as ABC,
                  ABCMeta as ABCMeta,
                  abstractmethod as abstractmethod,
-                 abstractproperty as abstractproperty,
+                #  abstractproperty as abstractproperty,
                  get_cache_token as get_cache_token)
 from .more import (ABCMixin,
                    ABCclassType,
                    ABCMetaclassType,
                    ABCException,
                    ABCWarning,
-                   abstract_class)
+                   abstract_class,
+                   abstractproperty)
 from .abc_dataclasses import abstractdataclass
 from .abc_enum import ABCEnumMeta, ABCEnum, ABCIntEnum, ABCFlag, ABCIntFlag
 from .abc_loogging import AbstractLogFilter, AbstractLogFormatter, AbstractLogHandler
@@ -23,6 +24,7 @@ __all__ = ["ABCMixin",
            "ABCException",
            "ABCWarning",
            "abstract_class",
+           "abstractproperty",
            "abstractdataclass",
            "ABCEnumMeta",
            "ABCEnum",
@@ -49,7 +51,7 @@ __all__ = ["ABCMixin",
            "ABC",
            "ABCMeta",
            "abstractmethod",
-           "abstractproperty",
+        #    "abstractproperty",
            "get_cache_token",
             # version of `more_abc` module
            "version"]

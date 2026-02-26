@@ -7,7 +7,8 @@ __all__ = ["ABCMixin",
            "ABCMetaclassType",
            "ABCException",
            "ABCWarning",
-           "abstract_class"]
+           "abstract_class",
+           "abstractproperty"]
 
 # All the ABC classes.
 # ======================================================================
@@ -73,7 +74,7 @@ ABCMetaclassType = type(ABCMeta)
 # ======================================================================
 
 # ======================================================================
-def abstract_class(*method_names: str):
+def abstract_class(*method_names):
     """
     Class decorator that converts a regular class into an ABC and marks
     the specified method names as abstract methods.
@@ -113,6 +114,41 @@ def abstract_class(*method_names: str):
         new_cls.__qualname__ = cls.__qualname__
         new_cls.__module__ = cls.__module__
         return new_cls
+
+    return decorator
+# ======================================================================
+
+# ======================================================================
+def abstractproperty(read_only=True):
+    """
+    Enhanced replacement for the deprecated ``abc.abstractproperty``.
+
+    Defines an abstract property on an ABC. Subclasses must provide a
+    concrete ``@property`` implementation. When *read_only* is ``False``,
+    subclasses must also implement a setter.
+    """
+    def decorator(func):
+        abstract_func = abstractmethod(func)
+        prop = property(abstract_func)
+        prop.__is_abstract_property__ = True  # type: ignore[attr-defined]
+        prop.__abstract_read_only__ = read_only  # type: ignore[attr-defined]
+
+        if not read_only:
+            original_setter = prop.setter
+
+            def setter(fset):
+                abstract_fset = abstractmethod(fset)
+                return original_setter(abstract_fset)
+
+            prop = prop.__class__(
+                prop.fget,
+                prop.fset,
+                prop.fdel,
+                prop.__doc__,
+            )
+            prop.setter = setter  # type: ignore[method-assign]
+
+        return prop
 
     return decorator
 # ======================================================================

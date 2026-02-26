@@ -4,6 +4,25 @@ import more_abc as _pkg
 from . import __all__, version
 from ._read_last_version import _check_mod_version
 
+# Leave it for now.
+# Add in 2.1.1
+# INTRODUCTION = """more_abc — an extension of the abc module.
+
+# Provides abstract base class utilities beyond the standard library:
+#   ABCMixin          abstract initialize / validate / to_dict interface
+#   abstract_class    decorator that converts any class into an ABC
+#   abstractdataclass @dataclass with ABCMeta built in
+#   ABCEnum / ABCIntEnum / ABCFlag / ABCIntFlag
+#                     Enum variants with abstract-method support
+#   ABCException / ABCWarning
+#                     abstract bases for custom exceptions and warnings
+#   AbstractLogHandler / AbstractLogFormatter / AbstractLogFilter
+#                     abstract bases for logging components
+#   AbstractRawIO / AbstractBufferedIO / AbstractTextIO
+#                     abstract bases for io stream types
+#   Sortable / Filterable / Transformable
+#                     ABC families for custom collection types
+# """
 
 def main():
     parser = ArgumentParser(

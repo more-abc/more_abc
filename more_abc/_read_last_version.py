@@ -3,10 +3,10 @@ import requests
 import configparser
 from packaging import version
 
-LATEST_CFG_URL = "https://raw.githubusercontent.com/more-abc/more_abc/refs/heads/master/more_abc/settings.cfg"
-# LATEST_CFG_URL = "https://github.com/more-abc/more_abc/raw/master/settings.cfg"
+LATEST_CFG_URL = "https://raw.githubusercontent.com/more-abc/more_abc/refs/heads/master/more_abc/version.cfg"
+# LATEST_CFG_URL = "https://github.com/more-abc/more_abc/raw/master/version.cfg"
 
-LOCAL_CFG_PATH = os.path.join(os.path.dirname(__file__), "settings.cfg")
+LOCAL_CFG_PATH = os.path.join(os.path.dirname(__file__), "version.cfg")
 
 REPO_URL = "https://github.com/more-abc/more_abc"
 
@@ -18,26 +18,26 @@ def _get_version_from_cfg(content):
     try:
         return cfg.get("version", "version").strip() 
     except (configparser.NoSectionError, configparser.NoOptionError):
-        print("[version] section or version field not found in the settings.cfg file.")
+        print("[version] section or version field not found in the version.cfg file.")
         return None
     
 def _get_latest_version():
-    """Read the `settings.cfg` file from the remote repository to obtain the latest version number."""
+    """Read the `version.cfg` file from the remote repository to obtain the latest version number."""
     try:
         resp = requests.get(LATEST_CFG_URL, timeout=20)
         resp.raise_for_status()
         return _get_version_from_cfg(resp.text)
     except Exception as e:
-        print(f"Failed to get remote settings.cfg: {e}")
+        print(f"Failed to get remote version.cfg: {e}")
         return None
 
 def _get_local_version():
-    """Read the version number from the local settings.cfg file"""
+    """Read the version number from the local version.cfg file"""
     try:
         with open(LOCAL_CFG_PATH, "r", encoding="utf-8") as f:
             return _get_version_from_cfg(f.read())
     except FileNotFoundError:
-        print("The local settings.cfg file does not exist")
+        print("The local version.cfg file does not exist")
         return None
     except Exception as e:
         print(f"Failed to read local version.cfg: {e}")

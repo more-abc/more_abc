@@ -6,7 +6,8 @@ __all__ = ["ABCMixin",
            "ABCMetaclassType",
            "ABCException",
            "ABCWarning",
-           "abstract_class"]
+           "abstract_class",
+           "abstractproperty"]
 
 class ABCMixin(metaclass=ABCMeta):
     @abstractmethod
@@ -40,3 +41,5 @@ class ABCWarning(Warning, metaclass=ABCMeta):
     def _get_message(self) -> str: ...
 
 def abstract_class(*method_names: str) -> Callable[[Type[Any]], Type[Any]]: ...
+
+def abstractproperty(read_only: bool = ...) -> Callable[[Callable[..., Any]], property]: ...
