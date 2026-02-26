@@ -7,8 +7,14 @@
 
 # This module refers to PEP 3119.
 # See https://peps.python.org/pep-3119/ or https://legacy.python.org/dev/peps/pep-3119/
+
+#                              __      
+#   __ _  ___  _______   ___ _/ /  ____
+#  /  ' \/ _ \/ __/ -_) / _ `/ _ \/ __/
+# /_/_/_/\___/_/  \__/__\_,_/_.__/\__/ 
+#                   /___/              
 """
-This module is an extension of the `abc` module,
+This module is an extension of the `abc` and `collections.abc` module,
 with many similar features added.
 
 Public symbols
@@ -56,7 +62,6 @@ import abc
 from abc import (ABC,
                  ABCMeta,
                  abstractmethod,
-                #  abstractproperty,
                  get_cache_token)
 
 from .more import (ABCMixin,
@@ -121,16 +126,19 @@ __all__ = ["ABCMixin",
            "ABC",
            "ABCMeta",
            "abstractmethod",
-        #    "abstractproperty",
            "get_cache_token",
             # version of `more_abc` module
            "version"]
 
-__version__ = "2.1.2"
+__version__ = "2.1.3"
 __author__ = "Evan Yang <quantbit@126.com>"
-__license__ = "MIT"
+__license__ = "GPL-3.0"
 # Can be development / stable / deprecated
 __status__ = "stable"
+
+__title__ = "more_abc"
+# more_abc™
+__description__ = "extension of the `abc` and `collections.abc` module"
 
 version = __version__
 """version of `more_abc` module."""

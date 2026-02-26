@@ -1,7 +1,6 @@
 from abc import (ABC as ABC,
                  ABCMeta as ABCMeta,
                  abstractmethod as abstractmethod,
-                #  abstractproperty as abstractproperty,
                  get_cache_token as get_cache_token)
 from .more import (ABCMixin,
                    ABCclassType,
@@ -51,7 +50,6 @@ __all__ = ["ABCMixin",
            "ABC",
            "ABCMeta",
            "abstractmethod",
-        #    "abstractproperty",
            "get_cache_token",
             # version of `more_abc` module
            "version"]
@@ -60,6 +58,8 @@ __all__ = ["ABCMixin",
 __author__: str
 __license__: str
 __status__: str
+__title__: str
+__description__: str
 __version__: str
 version = __version__
 
