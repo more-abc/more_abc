@@ -11,7 +11,7 @@ with many similar features added.
 ## Installation
 
 ```bash
-pip install more_abc
+pip install more-abc
 ```
 
 ## Usage
