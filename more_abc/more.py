@@ -2,11 +2,12 @@
 
 from abc import ABC, ABCMeta, abstractmethod
 
-__all__ = ["ABCMixin", 
-           "ABCclassType", 
+__all__ = ["ABCMixin",
+           "ABCclassType",
            "ABCMetaclassType",
            "ABCException",
-           "ABCWarning"]
+           "ABCWarning",
+           "abstract_class"]
 
 # All the ABC classes.
 # ======================================================================
@@ -69,6 +70,51 @@ ABCMetaclassType = type(ABCMeta)
 # I tried to pass him an docstring and something 
 # went wrong with the error reporting, but now it's gone. 
 # It should be somewhat similar to the `types`` module.
+# ======================================================================
+
+# ======================================================================
+def abstract_class(*method_names: str):
+    """
+    Class decorator that converts a regular class into an ABC and marks
+    the specified method names as abstract methods.
+
+    ~To facilitate understanding, I have made an exception 
+    to add usage examples for this function.~
+    
+    Example
+    -------
+    >>> @abstract_class('run', 'stop')
+    ... class Worker:
+    ...     def run(self): ...
+    ...     def stop(self): ...
+    >>> class MyWorker(Worker):
+    ...     def run(self): print("running")
+    ...     def stop(self): print("stopped")
+    """
+    def decorator(cls):
+        namespace = {}
+        for key, value in vars(cls).items():
+            if key in ('__dict__', '__weakref__'):
+                continue
+            if key in method_names and callable(value):
+                namespace[key] = abstractmethod(value)
+            else:
+                namespace[key] = value
+
+        for name in method_names:
+            if name not in namespace:
+                def _stub(self):
+                    pass
+                _stub.__name__ = name
+                _stub.__qualname__ = f"{cls.__qualname__}.{name}"
+                namespace[name] = abstractmethod(_stub)
+
+        new_cls = ABCMeta(cls.__name__, cls.__bases__, namespace)
+        new_cls.__qualname__ = cls.__qualname__
+        new_cls.__module__ = cls.__module__
+        return new_cls
+
+    return decorator
 # ======================================================================
 
 # ======================================================================

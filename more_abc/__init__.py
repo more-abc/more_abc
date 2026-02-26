@@ -14,13 +14,14 @@ From this package:
     ABCMetaclassType      -- type alias: type(ABCMeta)
     ABCException          -- abstract base for custom exceptions
     ABCWarning            -- abstract base for custom warnings
-    abc_dataclass         -- @dataclass + ABCMeta combined decorator
+    abstract_class            -- decorator that turns a class into an ABC with specified abstract methods
+    abstractdataclass         -- @dataclass + ABCMeta combined decorator
     
     ABCEnumMeta           -- combined ABCMeta + EnumMeta metaclass
-    AbcEnum               -- Enum base class with abstract-method support
-    AbcIntEnum            -- IntEnum base class with abstract-method support
-    AbcFlag               -- Flag base class with abstract-method support
-    AbcIntFlag            -- IntFlag base class with abstract-method support
+    ABCEnum               -- Enum base class with abstract-method support
+    ABCIntEnum            -- IntEnum base class with abstract-method support
+    ABCFlag               -- Flag base class with abstract-method support
+    ABCIntFlag            -- IntFlag base class with abstract-method support
 
     AbstractLogHandler    -- abstract base for logging.Handler
     AbstractLogFormatter  -- abstract base for logging.Formatter
@@ -56,33 +57,47 @@ from .more import (ABCMixin,
                    ABCclassType,
                    ABCMetaclassType,
                    ABCException,
-                   ABCWarning)
-from .abc_dataclasses import abc_dataclass
-from .abc_enum import ABCEnumMeta, AbcEnum, AbcIntEnum, AbcFlag, AbcIntFlag
-from .abc_loogging import AbstractLogFilter, AbstractLogFormatter, AbstractLogHandler
-from .abc_io import AbstractBufferedIO, AbstractRawIO, AbstractTextIO
-from .collections_abc import (BaseSortable, SortableMixin, Sortable,
-                               BaseFilterable, FilterableMixin, Filterable,
-                               BaseTransformable, TransformableMixin, Transformable)
-# from ._read_last_version import _check_mod_version
+                   ABCWarning,
+                   abstract_class)
+from .abc_dataclasses import abstractdataclass
+from .abc_enum import (ABCEnumMeta, 
+                       ABCEnum, 
+                       ABCIntEnum, 
+                       ABCFlag, 
+                       ABCIntFlag)
+from .abc_loogging import (AbstractLogFilter, 
+                           AbstractLogFormatter, 
+                           AbstractLogHandler)
+from .abc_io import (AbstractBufferedIO, 
+                     AbstractRawIO, 
+                     AbstractTextIO)
+from .collections_abc import (BaseSortable, 
+                              SortableMixin, 
+                              Sortable,
+                               BaseFilterable, 
+                               FilterableMixin, 
+                               Filterable,
+                               BaseTransformable, 
+                               TransformableMixin,
+                                 Transformable)
 
 __all__ = ["ABCMixin",
            "ABCclassType",
            "ABCMetaclassType",
            "ABCException",
            "ABCWarning",
-           "abc_dataclass",
+           "abstractdataclass",
            "ABCEnumMeta",
-           "AbcEnum",
-           "AbcIntEnum",
-           "AbcFlag",
-           "AbcIntFlag",
+           "ABCEnum",
+           "ABCIntEnum",
+           "ABCFlag",
+           "ABCIntFlag",
            "AbstractLogFilter",
            "AbstractLogFormatter",
            "AbstractLogHandler",
-            "AbstractRawIO",
-            "AbstractBufferedIO",
-            "AbstractTextIO",
+           "AbstractRawIO",
+           "AbstractBufferedIO",
+           "AbstractTextIO",
            # collections_abc
            "BaseSortable", 
            "SortableMixin", 
@@ -102,7 +117,7 @@ __all__ = ["ABCMixin",
             # version of `more_abc` module
            "version"]
 
-__version__ = "2.0.6"
+__version__ = "2.1.0"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "MIT"
 # Can be development / stable / deprecated
@@ -133,5 +148,3 @@ else:
     ABCCompat.ABC = abc.ABC # type: ignore
 
 sys.modules[__name__].__dict__.update(ABCCompat.__dict__)
-
-# _check_mod_version()

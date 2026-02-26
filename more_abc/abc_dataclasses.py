@@ -18,7 +18,7 @@ def _ensure_abcmeta(cls):
 
 
 
-def abc_dataclass(cls=None, /, **kwargs):
+def abstractdataclass(cls=None, /, **kwargs):
     """A decorator that combines ``@dataclass`` with ABC abstract-method support.
 
     Accepts the same keyword arguments as :func:`dataclasses.dataclass`.
@@ -26,7 +26,7 @@ def abc_dataclass(cls=None, /, **kwargs):
     you can declare :func:`~abc.abstractmethod` members without manually
     inheriting from :class:`~abc.ABC`.
     """
-    def wrap(c: type) -> type:
+    def wrap(c):
         c = _ensure_abcmeta(c)
         return dataclass(c, **kwargs)
 

@@ -3,7 +3,7 @@
 from abc import ABCMeta
 from enum import Enum, EnumMeta, IntEnum, Flag, IntFlag
 
-__all__ = ["ABCEnumMeta", "AbcEnum", "AbcIntEnum", "AbcFlag", "AbcIntFlag"]
+__all__ = ["ABCEnumMeta", "ABCEnum", "ABCIntEnum", "ABCFlag", "ABCIntFlag"]
 
 
 class ABCEnumMeta(ABCMeta, EnumMeta):
@@ -11,12 +11,12 @@ class ABCEnumMeta(ABCMeta, EnumMeta):
 
     Allows enum classes to declare abstract methods via
     :func:`~abc.abstractmethod`.  You rarely need to use this directly —
-    prefer subclassing :class:`AbcEnum` instead.
+    prefer subclassing :class:`ABCEnum` instead.
     """
     pass
 
 
-class AbcEnum(Enum, metaclass=ABCEnumMeta):
+class ABCEnum(Enum, metaclass=ABCEnumMeta):
     """An :class:`~enum.Enum` base class that supports abstract methods.
 
     Subclass this instead of :class:`~enum.Enum` when you want to enforce
@@ -25,7 +25,7 @@ class AbcEnum(Enum, metaclass=ABCEnumMeta):
     pass
 
 
-class AbcIntEnum(IntEnum, metaclass=ABCEnumMeta):
+class ABCIntEnum(IntEnum, metaclass=ABCEnumMeta):
     """An :class:`~enum.IntEnum` base class that supports abstract methods.
 
     Members compare equal to their integer values, while still allowing
@@ -34,7 +34,7 @@ class AbcIntEnum(IntEnum, metaclass=ABCEnumMeta):
     pass
 
 
-class AbcFlag(Flag, metaclass=ABCEnumMeta):
+class ABCFlag(Flag, metaclass=ABCEnumMeta):
     """A :class:`~enum.Flag` base class that supports abstract methods.
 
     Supports bitwise combination of members, while still allowing
@@ -43,7 +43,7 @@ class AbcFlag(Flag, metaclass=ABCEnumMeta):
     pass
 
 
-class AbcIntFlag(IntFlag, metaclass=ABCEnumMeta):
+class ABCIntFlag(IntFlag, metaclass=ABCEnumMeta):
     """An :class:`~enum.IntFlag` base class that supports abstract methods.
 
     Members are integers and support bitwise operations, while still

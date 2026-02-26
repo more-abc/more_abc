@@ -1,11 +1,12 @@
 from abc import ABCMeta, abstractmethod
-from typing import Any
+from typing import Any, Callable, Type
 
 __all__ = ["ABCMixin",
            "ABCclassType",
            "ABCMetaclassType",
            "ABCException",
-           "ABCWarning"]
+           "ABCWarning",
+           "abstract_class"]
 
 class ABCMixin(metaclass=ABCMeta):
     @abstractmethod
@@ -37,3 +38,5 @@ class ABCWarning(Warning, metaclass=ABCMeta):
     def __init__(self, cls: Any = ...) -> None: ...
     @abstractmethod
     def _get_message(self) -> str: ...
+
+def abstract_class(*method_names: str) -> Callable[[Type[Any]], Type[Any]]: ...

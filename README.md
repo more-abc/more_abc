@@ -75,15 +75,15 @@ warnings.warn(DeprecatedWarning(cls="OldClass"))
 # DeprecatedWarning: 'OldClass' is deprecated and will be removed in a future version.
 ```
 
-### AbcEnum
+### ABCEnum
 
-`AbcEnum` is an `Enum` base class that supports abstract methods. Use it when you want to define an enum interface that concrete subclasses must implement.
+`ABCEnum` is an `Enum` base class that supports abstract methods. Use it when you want to define an enum interface that concrete subclasses must implement.
 
 ```python
 from abc import abstractmethod
-from more_abc import AbcEnum
+from more_abc import ABCEnum
 
-class Direction(AbcEnum):
+class Direction(ABCEnum):
     NORTH = "N"
     SOUTH = "S"
     EAST  = "E"
@@ -109,15 +109,15 @@ print(CardinalDirection.NORTH.opposite())  # CardinalDirection.SOUTH
 
 `ABCEnumMeta` is the underlying combined metaclass (`ABCMeta + EnumMeta`) and is available for advanced use cases.
 
-### AbcIntEnum
+### ABCIntEnum
 
-`AbcIntEnum` is an `IntEnum` base class that supports abstract methods. Members compare equal to their integer values.
+`ABCIntEnum` is an `IntEnum` base class that supports abstract methods. Members compare equal to their integer values.
 
 ```python
 from abc import abstractmethod
-from more_abc import AbcIntEnum
+from more_abc import ABCIntEnum
 
-class Permission(AbcIntEnum):
+class Permission(ABCIntEnum):
     READ    = 1
     WRITE   = 2
     EXECUTE = 4
@@ -137,15 +137,15 @@ print(FilePermission.READ.label())   # "read"
 print(FilePermission.READ > 0)       # True  (int comparison)
 ```
 
-### AbcFlag
+### ABCFlag
 
-`AbcFlag` is a `Flag` base class that supports abstract methods. Members can be combined with bitwise operators.
+`ABCFlag` is a `Flag` base class that supports abstract methods. Members can be combined with bitwise operators.
 
 ```python
 from abc import abstractmethod
-from more_abc import AbcFlag
+from more_abc import ABCFlag
 
-class Access(AbcFlag):
+class Access(ABCFlag):
     READ    = 1
     WRITE   = 2
     EXECUTE = 4
@@ -165,15 +165,15 @@ rw = FileAccess.READ | FileAccess.WRITE
 print(rw)  # FileAccess.READ|WRITE
 ```
 
-### AbcIntFlag
+### ABCIntFlag
 
-`AbcIntFlag` is an `IntFlag` base class that supports abstract methods. Combines integer semantics with bitwise flag operations.
+`ABCIntFlag` is an `IntFlag` base class that supports abstract methods. Combines integer semantics with bitwise flag operations.
 
 ```python
 from abc import abstractmethod
-from more_abc import AbcIntFlag
+from more_abc import ABCIntFlag
 
-class Mode(AbcIntFlag):
+class Mode(ABCIntFlag):
     READ    = 0o4
     WRITE   = 0o2
     EXECUTE = 0o1
@@ -193,22 +193,69 @@ print(UnixMode.READ.to_octal())              # '0o4'
 print((UnixMode.READ | UnixMode.WRITE) == 6) # True
 ```
 
-### abc_dataclass
+### abstract_class
 
-`abc_dataclass` is a drop-in replacement for `@dataclass` that automatically gives the class `ABCMeta` as its metaclass, so you can use `@abstractmethod` without manually inheriting from `ABC`.
+`abstract_class` is a decorator that converts any regular class into an ABC and marks the specified method names as abstract, without requiring manual `ABCMeta` or `ABC` inheritance.
+
+```python
+from more_abc import abstract_class
+
+@abstract_class('run', 'stop')
+class Worker:
+    def run(self): ...
+    def stop(self): ...
+
+class MyWorker(Worker):
+    def run(self):
+        print("running")
+
+    def stop(self):
+        print("stopped")
+
+w = MyWorker()
+w.run()   # running
+w.stop()  # stopped
+```
+
+Attempting to instantiate without implementing all abstract methods raises `TypeError`:
+
+```python
+class BadWorker(Worker):
+    def run(self):
+        print("running")
+# missing stop()
+
+BadWorker()  # TypeError: Can't instantiate abstract class BadWorker without an implementation for abstract method 'stop'
+```
+
+Methods listed in `abstract_class` that don't exist on the decorated class are automatically added as abstract stubs:
+
+```python
+@abstract_class('process', 'cleanup')
+class Pipeline:
+    pass  # neither method defined — both become abstract stubs
+
+class MyPipeline(Pipeline):
+    def process(self): ...
+    def cleanup(self): ...
+```
+
+### abstractdataclass
+
+`abstractdataclass` is a drop-in replacement for `@dataclass` that automatically gives the class `ABCMeta` as its metaclass, so you can use `@abstractmethod` without manually inheriting from `ABC`.
 
 ```python
 from abc import abstractmethod
-from more_abc import abc_dataclass
+from more_abc import abstractdataclass
 
-@abc_dataclass
+@abstractdataclass
 class Shape:
     color: str
 
     @abstractmethod
     def area(self) -> float: ...
 
-@abc_dataclass(frozen=True)
+@abstractdataclass(frozen=True)
 class Circle(Shape):
     radius: float
 
@@ -305,10 +352,10 @@ handler.addFilter(ErrorOnlyFilter())
 ```python
 # Instead of:
 from abc import ABC, ABCMeta, abstractmethod
-from more_abc import ABCMixin, abc_dataclass
+from more_abc import ABCMixin, abstractdataclass
 
 # You can do:
-from more_abc import ABC, ABCMeta, abstractmethod, ABCMixin, abc_dataclass
+from more_abc import ABC, ABCMeta, abstractmethod, ABCMixin, abstractdataclass
 ```
 
 Available re-exports: `ABC`, `ABCMeta`, `abstractmethod`, `abstractproperty`, `get_cache_token`.

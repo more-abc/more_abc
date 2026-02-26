@@ -7,9 +7,10 @@ from .more import (ABCMixin,
                    ABCclassType,
                    ABCMetaclassType,
                    ABCException,
-                   ABCWarning)
-from .abc_dataclasses import abc_dataclass
-from .abc_enum import ABCEnumMeta, AbcEnum, AbcIntEnum, AbcFlag, AbcIntFlag
+                   ABCWarning,
+                   abstract_class)
+from .abc_dataclasses import abstractdataclass
+from .abc_enum import ABCEnumMeta, ABCEnum, ABCIntEnum, ABCFlag, ABCIntFlag
 from .abc_loogging import AbstractLogFilter, AbstractLogFormatter, AbstractLogHandler
 from .abc_io import AbstractBufferedIO, AbstractRawIO, AbstractTextIO
 from .collections_abc import (BaseSortable, SortableMixin, Sortable,
@@ -21,12 +22,13 @@ __all__ = ["ABCMixin",
            "ABCMetaclassType",
            "ABCException",
            "ABCWarning",
-           "abc_dataclass",
+           "abstract_class",
+           "abstractdataclass",
            "ABCEnumMeta",
-           "AbcEnum",
-           "AbcIntEnum",
-           "AbcFlag",
-           "AbcIntFlag",
+           "ABCEnum",
+           "ABCIntEnum",
+           "ABCFlag",
+           "ABCIntFlag",
            "AbstractLogFilter",
            "AbstractLogFormatter",
            "AbstractLogHandler",

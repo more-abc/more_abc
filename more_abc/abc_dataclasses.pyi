@@ -1,15 +1,15 @@
 from typing import Callable, TypeVar, overload
 
-__all__ = ["abc_dataclass"]
+__all__ = ["abstractdataclass"]
 
 _T = TypeVar("_T")
 
 def _ensure_abcmeta(cls: type) -> type: ...
 
 @overload
-def abc_dataclass(cls: type[_T], /) -> type[_T]: ...
+def abstractdataclass(cls: type[_T], /) -> type[_T]: ...
 @overload
-def abc_dataclass(
+def abstractdataclass(
     cls: None = ...,
     /,
     *,
@@ -24,3 +24,4 @@ def abc_dataclass(
     slots: bool = ...,
     weakref_slot: bool = ...,
 ) -> Callable[[type[_T]], type[_T]]: ...
+
