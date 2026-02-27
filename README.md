@@ -3,7 +3,7 @@
 This module is an extension of the `abc` module, 
 with many similar features added.
 
-![License: MIT](https://img.shields.io/badge/License-MIT-%2396DA45?style=for-the-badge&logo=opensourceinitiative&logoColor=white)
+![License: MIT](https://img.shields.io/badge/GPL-3.0-%2396DA45?style=for-the-badge&logo=opensourceinitiative&logoColor=white)
 ![text](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
 ![text](https://img.shields.io/badge/Status-Active-brightgreen)
 [![PyPI Version](https://img.shields.io/pypi/v/more_abc.svg)](https://pypi.org/project/more_abc/)
