@@ -8,11 +8,6 @@
 # This module refers to PEP 3119.
 # See https://peps.python.org/pep-3119/ or https://legacy.python.org/dev/peps/pep-3119/
 
-#                              __      
-#   __ _  ___  _______   ___ _/ /  ____
-#  /  ' \/ _ \/ __/ -_) / _ `/ _ \/ __/
-# /_/_/_/\___/_/  \__/__\_,_/_.__/\__/ 
-#                   /___/              
 """
 This module is an extension of the `abc` and `collections.abc` module,
 with many similar features added.
@@ -53,8 +48,8 @@ From this package:
     TransformableMixin    -- concrete map() helper
     Transformable         -- final ABC combining BaseTransformable + TransformableMixin
 
-Re-exported from :mod:`abc`:
-    ABC, ABCMeta, abstractmethod, abstractproperty, get_cache_token
+Re-exported from `abc` module:
+    ABC, ABCMeta, abstractmethod, get_cache_token
 """
 
 import sys
@@ -62,16 +57,21 @@ import abc
 from abc import (ABC,
                  ABCMeta,
                  abstractmethod,
-                 get_cache_token)
+                 get_cache_token)  # `get_cache_token`? What it this?
 
+# Do you know why there are still many other extensions 
+# in my code even though there is clearly a `more.py` file?
 from .more import (ABCMixin,
                    ABCclassType,
                    ABCMetaclassType,
                    ABCException,
                    ABCWarning,
                    abstract_class,
-                   abstractproperty)
+                   abstractproperty)  # New one
 from .abc_dataclasses import abstractdataclass
+
+# It is unclear whether the code contained 
+# in this file overlaps with that of other developers.
 from .abc_enum import (ABCEnumMeta, 
                        ABCEnum, 
                        ABCIntEnum, 
@@ -86,12 +86,12 @@ from .abc_io import (AbstractBufferedIO,
 from .collections_abc import (BaseSortable, 
                               SortableMixin, 
                               Sortable,
-                               BaseFilterable, 
-                               FilterableMixin, 
-                               Filterable,
-                               BaseTransformable, 
-                               TransformableMixin,
-                                 Transformable)
+                              BaseFilterable, 
+                              FilterableMixin, 
+                              Filterable,
+                              BaseTransformable, 
+                              TransformableMixin,
+                              Transformable)
 
 __all__ = ["ABCMixin",
            "ABCclassType",
@@ -130,7 +130,7 @@ __all__ = ["ABCMixin",
             # version of `more_abc` module
            "version"]
 
-__version__ = "2.1.4"
+__version__ = "2.1.5"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "GPL-3.0"
 # Can be development / stable / deprecated

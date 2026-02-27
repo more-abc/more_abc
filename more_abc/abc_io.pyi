@@ -1,4 +1,4 @@
-"""Type stubs for more_abc.abc_io."""
+# """Type stubs for `more_abc.abc_io`."""
 
 import io
 from typing import Optional

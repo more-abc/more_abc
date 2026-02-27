@@ -18,7 +18,9 @@ def _ensure_abcmeta(cls):
 
 
 
-def abstractdataclass(cls=None, /, **kwargs):
+def abstractdataclass(cls=None, /, *, init=True, repr=True, eq=True, order=False,
+              unsafe_hash=False, frozen=False, match_args=True,
+              kw_only=False, slots=False, weakref_slot=False):
     """A decorator that combines ``@dataclass`` with ABC abstract-method support.
 
     Accepts the same keyword arguments as :func:`dataclasses.dataclass`.
@@ -28,7 +30,17 @@ def abstractdataclass(cls=None, /, **kwargs):
     """
     def wrap(c):
         c = _ensure_abcmeta(c)
-        return dataclass(c, **kwargs)
+        return dataclass(c, 
+                        init=init, 
+                        repr=repr, 
+                        eq=eq, 
+                        order=order, 
+                        unsafe_hash=unsafe_hash,
+                        frozen=frozen, 
+                        match_args=match_args, 
+                        kw_only=kw_only, 
+                        slots=slots,
+                        weakref_slot=weakref_slot) # type: ignore
 
     if cls is None:
         return wrap

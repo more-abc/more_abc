@@ -1,4 +1,6 @@
-"""Type stubs for more_abc.collections_abc."""
+# """Type stubs for `more_abc.collections_abc``."""
+
+# The original docstring got overwritten by this thing.
 
 from abc import ABCMeta
 from typing import Any, Callable, TypeVar

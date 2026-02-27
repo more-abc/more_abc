@@ -1,5 +1,11 @@
 """Core functions (And `types` module like) of the module are contained in this file."""
 
+#                              __      
+#   __ _  ___  _______   ___ _/ /  ____
+#  /  ' \/ _ \/ __/ -_) / _ `/ _ \/ __/
+# /_/_/_/\___/_/  \__/__\_,_/_.__/\__/ 
+#                   /___/              
+
 from abc import ABC, ABCMeta, abstractmethod
 
 __all__ = ["ABCMixin",
@@ -74,23 +80,24 @@ ABCMetaclassType = type(ABCMeta)
 # ======================================================================
 
 # ======================================================================
+#  To facilitate understanding, I have made an exception 
+# to add usage examples for this function.
+
+# Example:
+# @abstract_class('run', 'stop')
+# class Worker:
+#     def run(self): ...
+#     def stop(self): ...
+
+# class MyWorker(Worker):
+#     def run(self): 
+#         print("running")
+#     def stop(self): 
+#         print("stopped")
 def abstract_class(*method_names):
     """
     Class decorator that converts a regular class into an ABC and marks
     the specified method names as abstract methods.
-
-    ~To facilitate understanding, I have made an exception 
-    to add usage examples for this function.~
-    
-    Example
-    -------
-    >>> @abstract_class('run', 'stop')
-    ... class Worker:
-    ...     def run(self): ...
-    ...     def stop(self): ...
-    >>> class MyWorker(Worker):
-    ...     def run(self): print("running")
-    ...     def stop(self): print("stopped")
     """
     def decorator(cls):
         namespace = {}

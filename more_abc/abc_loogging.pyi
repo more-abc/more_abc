@@ -1,4 +1,4 @@
-"""Type stubs for more_abc.abc_loogging."""
+# """Type stubs for `more_abc.abc_loogging`."""
 
 import logging
 from typing import Any, Dict

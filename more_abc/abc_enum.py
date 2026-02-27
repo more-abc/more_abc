@@ -6,6 +6,9 @@ from enum import Enum, EnumMeta, IntEnum, Flag, IntFlag
 __all__ = ["ABCEnumMeta", "ABCEnum", "ABCIntEnum", "ABCFlag", "ABCIntFlag"]
 
 
+# It's just a very simple wrap-up. 
+# I'm not sure if this can even be called "packaging" — it's merely the 
+# inheritance and encapsulation of a class.
 class ABCEnumMeta(ABCMeta, EnumMeta):
     """Combined metaclass of :class:`~abc.ABCMeta` and :class:`~enum.EnumMeta`.
 
@@ -13,7 +16,7 @@ class ABCEnumMeta(ABCMeta, EnumMeta):
     :func:`~abc.abstractmethod`.  You rarely need to use this directly —
     prefer subclassing :class:`ABCEnum` instead.
     """
-    pass
+    pass   # Check out these simple encapsulations!
 
 
 class ABCEnum(Enum, metaclass=ABCEnumMeta):

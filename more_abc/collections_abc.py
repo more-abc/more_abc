@@ -21,7 +21,7 @@ class BaseSortable(metaclass=abc.ABCMeta):
     def __sort__(self, reverse=False):
         """
         Core abstract methods (in the style of magic methods, consistent with __iter__/__getitem__)
-    Requires subclasses to implement sorting logic and modify the container itself
+        Requires subclasses to implement sorting logic and modify the container itself
         """
         raise NotImplementedError(
             f"{self.__class__.__name__} must implement __sort__()"
