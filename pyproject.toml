@@ -7,7 +7,7 @@ name = "more_abc"
 version = "2.1.6"
 description = "An extension of the abc module with many similar features added."
 readme = "README.md"
-license = { text = "MIT" }
+license = { text = "GPL-3.0" }
 authors = [
     { name = "Evan Yang", email = "quantbit@126.com" }
 ]
