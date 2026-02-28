@@ -13,9 +13,16 @@ from .abc_dataclasses import abstractdataclass
 from .abc_enum import ABCEnumMeta, ABCEnum, ABCIntEnum, ABCFlag, ABCIntFlag
 from .abc_loogging import AbstractLogFilter, AbstractLogFormatter, AbstractLogHandler
 from .abc_io import AbstractBufferedIO, AbstractRawIO, AbstractTextIO
-from .collections_abc import (BaseSortable, SortableMixin, Sortable,
-                               BaseFilterable, FilterableMixin, Filterable,
-                               BaseTransformable, TransformableMixin, Transformable)
+from .abc_json import AbstractJSONDecoder, AbstractJSONEncoder
+from .collections_abc import (BaseSortable, 
+                              SortableMixin, 
+                              Sortable,
+                              BaseFilterable, 
+                              FilterableMixin, 
+                              Filterable,
+                              BaseTransformable, 
+                              TransformableMixin,
+                              Transformable)
 
 __all__ = ["ABCMixin",
            "ABCclassType",
@@ -36,6 +43,8 @@ __all__ = ["ABCMixin",
            "AbstractRawIO",
            "AbstractBufferedIO",
            "AbstractTextIO",
+           "AbstractJSONEncoder",
+           "AbstractJSONDecoder",
            # collections_abc
            "BaseSortable", 
            "SortableMixin", 
@@ -53,7 +62,6 @@ __all__ = ["ABCMixin",
            "get_cache_token",
             # version of `more_abc` module
            "version"]
-
 
 __author__: str
 __license__: str

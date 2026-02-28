@@ -38,6 +38,9 @@ From this package:
     AbstractBufferedIO    -- abstract base for io.BufferedIOBase
     AbstractTextIO        -- abstract base for io.TextIOBase
 
+    AbstractJSONDecoder   -- abstract base for json.JSONDecoder
+    AbstractJSONEncoder   -- abstract base for json.JSONEncoder
+
     BaseSortable          -- minimal abstract interface for sortable containers
     SortableMixin         -- concrete sort()/sorted() helpers
     Sortable              -- final ABC combining BaseSortable + SortableMixin
@@ -83,6 +86,8 @@ from .abc_loogging import (AbstractLogFilter,
 from .abc_io import (AbstractBufferedIO, 
                      AbstractRawIO, 
                      AbstractTextIO)
+from .abc_json import (AbstractJSONDecoder,
+                       AbstractJSONEncoder)
 from .collections_abc import (BaseSortable, 
                               SortableMixin, 
                               Sortable,
@@ -112,6 +117,8 @@ __all__ = ["ABCMixin",
            "AbstractRawIO",
            "AbstractBufferedIO",
            "AbstractTextIO",
+           "AbstractJSONEncoder",
+           "AbstractJSONDecoder",
            # collections_abc
            "BaseSortable", 
            "SortableMixin", 
@@ -130,7 +137,7 @@ __all__ = ["ABCMixin",
             # version of `more_abc` module
            "version"]
 
-__version__ = "2.1.6"
+__version__ = "2.1.7"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "GPL-3.0"
 # Can be development / stable / deprecated

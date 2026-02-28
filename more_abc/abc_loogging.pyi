@@ -7,7 +7,7 @@ __all__ = ["AbstractLogHandler", "AbstractLogFormatter", "AbstractLogFilter"]
 
 
 class AbstractLogHandler(logging.Handler):
-    """Abstract base class for log handlers, extending logging.Handler."""
+    # """Abstract base class for log handlers, extending logging.Handler."""
 
     _handler_config: Dict[str, Any]
 
@@ -18,12 +18,12 @@ class AbstractLogHandler(logging.Handler):
 
 
 class AbstractLogFormatter(logging.Formatter):
-    """Abstract base class for log formatters, extending logging.Formatter."""
+    # """Abstract base class for log formatters, extending logging.Formatter."""
 
     def format(self, record: logging.LogRecord) -> str: ...
 
 
 class AbstractLogFilter(logging.Filter):
-    """Abstract base class for log filters, extending logging.Filter."""
+    # """Abstract base class for log filters, extending logging.Filter."""
 
     def filter(self, record: logging.LogRecord) -> bool: ...

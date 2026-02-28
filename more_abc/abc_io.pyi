@@ -8,7 +8,7 @@ __all__ = ["AbstractRawIO", "AbstractBufferedIO", "AbstractTextIO"]
 
 
 class AbstractRawIO(io.RawIOBase):
-    """Abstract base class for raw binary I/O, extending io.RawIOBase."""
+    # """Abstract base class for raw binary I/O, extending io.RawIOBase."""
 
     def read(self, size: int = ...) -> bytes: ...
     def readinto(self, b: WriteableBuffer) -> int: ...
@@ -16,7 +16,7 @@ class AbstractRawIO(io.RawIOBase):
 
 
 class AbstractBufferedIO(io.BufferedIOBase):
-    """Abstract base class for buffered binary I/O, extending io.BufferedIOBase."""
+    # """Abstract base class for buffered binary I/O, extending io.BufferedIOBase."""
 
     def read(self, size: Optional[int] = ...) -> bytes: ...
     def read1(self, size: int = ...) -> bytes: ...
