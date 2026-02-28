@@ -13,14 +13,14 @@ __all__ = [
 
 class BaseSortable(metaclass=abc.ABCMeta):
     """
-    Minimal interface for sortable containers (similar to collections.abc.BaseIterable),
+    Minimal interface for sortable containers (similar to `collections.abc.BaseIterable`),
     Only defines core abstract methods with no concrete implementations whatsoever
     """
 
     @abc.abstractmethod
     def __sort__(self, reverse=False):
         """
-        Core abstract methods (in the style of magic methods, consistent with __iter__/__getitem__)
+        Core abstract methods (in the style of magic methods, consistent with `__iter__`/`__getitem__`)
         Requires subclasses to implement sorting logic and modify the container itself
         """
         raise NotImplementedError(
@@ -30,7 +30,7 @@ class BaseSortable(metaclass=abc.ABCMeta):
 class SortableMixin:
     """
     Sorting Mixin (containing only general-purpose methods, no abstract methods)
-    Implements common sorting-related methods based on __sort__
+    Implements common sorting-related methods based on `__sort__`
     """
     def sort(self, reverse=False):
         """User-friendly methods exposed externally"""
@@ -62,7 +62,8 @@ class Sortable(BaseSortable, SortableMixin):
 
 
 class BaseFilterable(metaclass=abc.ABCMeta):
-    """Minimal interface for containers that support predicate-based filtering.
+    """
+    Minimal interface for containers that support predicate-based filtering.
 
     Only defines the core abstract method with no concrete implementations.
     """
@@ -70,10 +71,8 @@ class BaseFilterable(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def __filter__(self, predicate):
-        """Return a new container keeping only elements for which predicate(elem) is True.
-
-        Args:
-            predicate: A callable that accepts one element and returns bool.
+        """
+        Return a new container keeping only elements for which predicate(elem) is True.
         """
         raise NotImplementedError(
             f"{self.__class__.__name__} must implement __filter__()"
@@ -81,7 +80,7 @@ class BaseFilterable(metaclass=abc.ABCMeta):
 
 
 class FilterableMixin:
-    """Filtering mixin with concrete helpers built on top of __filter__.
+    """Filtering mixin with concrete helpers built on top of `__filter__`.
 
     Contains only general-purpose methods; no abstract methods of its own.
     """
@@ -111,7 +110,8 @@ class Filterable(BaseFilterable, FilterableMixin):
 
 
 class BaseTransformable(metaclass=abc.ABCMeta):
-    """Minimal interface for containers that support element-wise transformation.
+    """
+    Minimal interface for containers that support element-wise transformation.
 
     Only defines the core abstract method with no concrete implementations.
     """
@@ -119,10 +119,8 @@ class BaseTransformable(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def __transform__(self, func):
-        """Return a new container with func applied to every element.
-
-        Args:
-            func: A callable that accepts one element and returns a new value.
+        """
+        Return a new container with func applied to every element.
         """
         raise NotImplementedError(
             f"{self.__class__.__name__} must implement __transform__()"
@@ -130,7 +128,7 @@ class BaseTransformable(metaclass=abc.ABCMeta):
 
 
 class TransformableMixin:
-    """Transformation mixin with concrete helpers built on top of __transform__.
+    """Transformation mixin with concrete helpers built on top of `__transform__`.
 
     Contains only general-purpose methods; no abstract methods of its own.
     """
@@ -141,7 +139,8 @@ class TransformableMixin:
 
 
 class Transformable(BaseTransformable, TransformableMixin):
-    """Final exposed ABC for transformable containers.
+    """
+    Final exposed ABC for transformable containers.
 
     Combines the minimal interface and the mixin, providing both mandatory
     constraints and general-purpose helpers.

@@ -24,7 +24,7 @@ class AbstractBufferedIO(io.BufferedIOBase):
 
 
 class AbstractTextIO(io.TextIOBase):
-    """Abstract base class for text I/O, extending io.TextIOBase."""
+    # """Abstract base class for text I/O, extending io.TextIOBase."""
 
     def read(self, size: Optional[int] = ...) -> str: ...
     def readline(self, size: Optional[int] = ...) -> str: ...
