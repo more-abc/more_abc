@@ -509,3 +509,52 @@ class StringIO(AbstractTextIO):
         self._lines.extend(s.splitlines(keepends=True))
         return len(s)
 ```
+
+### AbstractJSONEncoder
+
+`AbstractJSONEncoder` is an abstract base for `json.JSONEncoder`. Subclasses must implement `default()`, `encode()`, and `iterencode()`.
+
+```python
+from more_abc import AbstractJSONEncoder
+from datetime import datetime
+
+class DateTimeEncoder(AbstractJSONEncoder):
+    def default(self, o):
+        if isinstance(o, datetime):
+            return o.isoformat()
+        return super().default(o)
+
+    def encode(self, o):
+        return super().encode(o)
+
+    def iterencode(self, o, _one_shot=False):
+        return super().iterencode(o, _one_shot)
+
+import json
+data = {"timestamp": datetime(2024, 1, 15, 10, 30)}
+result = json.dumps(data, cls=DateTimeEncoder)
+print(result)  # {"timestamp": "2024-01-15T10:30:00"}
+```
+
+### AbstractJSONDecoder
+
+`AbstractJSONDecoder` is an abstract base for `json.JSONDecoder`. Subclasses must implement `decode()` and `raw_decode()`.
+
+```python
+from more_abc import AbstractJSONDecoder
+import json
+
+class UpperCaseDecoder(AbstractJSONDecoder):
+    def decode(self, s):
+        obj = super().decode(s)
+        if isinstance(obj, dict):
+            return {k.upper(): v for k, v in obj.items()}
+        return obj
+
+    def raw_decode(self, s, idx=0):
+        return super().raw_decode(s, idx)
+
+data = '{"name": "alice", "age": 30}'
+result = json.loads(data, cls=UpperCaseDecoder)
+print(result)  # {'NAME': 'alice', 'AGE': 30}
+```
