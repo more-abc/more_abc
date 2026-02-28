@@ -2,7 +2,6 @@ from argparse import ArgumentParser
 import more_abc as _pkg
 
 from . import __all__, version
-from ._read_last_version import _check_mod_version
 
 # Leave it for now.
 # Add in 2.1.1
@@ -45,7 +44,6 @@ def main():
         help="print the docstring of a public symbol",
     )
     args = parser.parse_args()
-    _check_mod_version()
 
     if args.doc:
         obj = getattr(_pkg, args.doc, None)

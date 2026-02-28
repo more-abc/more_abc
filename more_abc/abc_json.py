@@ -14,7 +14,7 @@ class AbstractJSONEncoder(json.JSONEncoder, metaclass=abc.ABCMeta):
     Abstract base class for JSON encoders, extending json.JSONEncoder.
 
     All custom JSON encoder implementations should subclass this to guarantee
-    a consistent interface. Subclasses must implement :meth:`default`.
+    a consistent interface. Subclasses must implement `default`, `encode` and `iterencode`.
     """
 
     @abc.abstractmethod
@@ -45,7 +45,7 @@ class AbstractJSONDecoder(json.JSONDecoder, metaclass=abc.ABCMeta):
     Abstract base class for JSON decoders, extending json.JSONDecoder.
 
     All custom JSON decoder implementations should subclass this to guarantee
-    a consistent interface. Subclasses must implement :meth:`decode` and :meth:`raw_decode`.
+    a consistent interface. Subclasses must implement `decode` and `raw_decode`.
     """
 
     @abc.abstractmethod

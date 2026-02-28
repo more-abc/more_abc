@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "more_abc"
-version = "2.1.7"
+version = "2.1.8"
 description = "An extension of the abc module with many similar features added."
 readme = "README.md"
 license = { text = "GPL-3.0" }
