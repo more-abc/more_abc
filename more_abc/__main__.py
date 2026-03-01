@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 import more_abc as _pkg
 
-from . import __all__, version
+from . import __all__
 
 # Leave it for now.
 # Add in 2.1.1
@@ -31,7 +31,7 @@ def main():
     parser.add_argument(
         "-v", "--version",
         action="version",
-        version=f"more_abc {version}",
+        version=f"more_abc {_pkg.__version__}",
     )
     parser.add_argument(
         "-l", "--list",

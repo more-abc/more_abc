@@ -133,11 +133,9 @@ __all__ = ["ABCMixin",
            "ABC",
            "ABCMeta",
            "abstractmethod",
-           "get_cache_token",
-            # version of `more_abc` module
-           "version"]
+           "get_cache_token"]
 
-__version__ = "2.1.13"
+__version__ = "2.2.0"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "GPL-3.0"
 # Can be development / stable / deprecated
@@ -147,12 +145,8 @@ __title__ = "more_abc"
 # more_abc™
 __description__ = "extension of the `abc` and `collections.abc` module"
 
-version = __version__
-"""version of `more_abc` module."""
 
 # Wrapper of the abc module that is compatible with Python
-PY_VERSION = sys.version_info[:2]
-
 class ABCCompat(object):
     """Compatibility shim that mirrors all public symbols from :mod:`abc`.
 
@@ -166,7 +160,7 @@ for attr in dir(abc):
     if not attr.startswith('_'):
         setattr(ABCCompat, attr, getattr(abc, attr))
 
-if PY_VERSION >= (3, 4):
+if sys.version_info >= (3, 4):
     ABCCompat.ABC = abc.ABC # type: ignore
 else:
     ABCCompat.ABC = abc.ABC # type: ignore

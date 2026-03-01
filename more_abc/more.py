@@ -135,8 +135,7 @@ def abstractproperty(read_only=True):
     subclasses must also implement a setter.
     """
     def decorator(func):
-        abstract_func = abstractmethod(func)
-        prop = property(abstract_func)
+        prop = property(abstract_func := abstractmethod(func))
         prop.__is_abstract_property__ = True  # type: ignore[attr-defined]
         prop.__abstract_read_only__ = read_only  # type: ignore[attr-defined]
 

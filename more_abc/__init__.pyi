@@ -59,9 +59,7 @@ __all__ = ["ABCMixin",
            "ABC",
            "ABCMeta",
            "abstractmethod",
-           "get_cache_token",
-            # version of `more_abc` module
-           "version"]
+           "get_cache_token"]
 
 __author__: str
 __license__: str
@@ -69,7 +67,5 @@ __status__: str
 __title__: str
 __description__: str
 __version__: str
-version = __version__
 
-PY_VERSION: str
 class ABCCompat(object): ...
