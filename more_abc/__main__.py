@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 import more_abc as _pkg
 
-def main_in_args():
+def main():
     parser = ArgumentParser(
         prog="python -m more_abc",
         description="more_abc — an extension of the abc module.",
@@ -37,11 +37,6 @@ def main_in_args():
     else:
         parser.print_help()
 
-def main_in_doc():
-    print(_pkg.__doc__)
-
 if __name__ == "__main__":
-    # Doc or args?
-    # main_in_doc()
-    main_in_args()
+    main()
    

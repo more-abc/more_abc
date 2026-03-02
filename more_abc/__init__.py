@@ -53,6 +53,9 @@ From this package:
 
 Re-exported from `abc` module:
     ABC, ABCMeta, abstractmethod, get_cache_token, update_abstractmethods
+from `typing_extensions` module (version < 4.0):
+    abstractasyncmethod
+
 """
 
 import sys
@@ -135,9 +138,11 @@ __all__ = ["ABCMixin",
            "ABCMeta",
            "abstractmethod",
            "get_cache_token",
-           "update_abstractmethods"]
+           "update_abstractmethods",
+           # re-exported from old typing_extensions
+           "abstractasyncmethod"]
 
-__version__ = "2.2.1"
+__version__ = "2.2.2"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "GPL-3.0"
 # Can be development / stable / deprecated
@@ -203,3 +208,29 @@ else:
                 abstracts.add(name)
         cls.__abstractmethods__ = frozenset(abstracts)
         return cls
+
+if sys.version_info >= (3, 10):
+    abstractasyncmethod = abc.abstractmethod
+    abstractasyncmethod.__doc__ = f"""
+    A decorator indicating an abstract async method.
+
+    Works like `abc.abstractmethod`, but for async methods.
+"""
+else:
+    def abstractasyncmethod(func):
+        """        
+        A decorator indicating an abstract async method.
+
+        Works like `abc.abstractmethod`, but for async methods.
+        """
+        if func is None:
+            return abstractasyncmethod  # Support @abstractasyncmethod (no args)
+        
+        func = abstractmethod(func)
+
+        setattr(func, "__is_async_abstract__", True)
+
+        if func.__doc__ is None:
+            func.__doc__ = "Async abstract method (must implement with async def)"
+        
+        return func

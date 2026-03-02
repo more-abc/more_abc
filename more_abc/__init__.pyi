@@ -61,7 +61,9 @@ __all__ = ["ABCMixin",
            "ABCMeta",
            "abstractmethod",
            "get_cache_token",
-           "update_abstractmethods"]
+           "update_abstractmethods",
+            # re-exported from old typing_extensions
+           "abstractasyncmethod"] # type: ignore
 
 __author__: str
 __license__: str
