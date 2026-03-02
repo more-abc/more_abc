@@ -1,29 +1,7 @@
 from argparse import ArgumentParser
 import more_abc as _pkg
 
-from . import __all__
-
-# Leave it for now.
-# Add in 2.1.1
-# INTRODUCTION = """more_abc — an extension of the abc module.
-
-# Provides abstract base class utilities beyond the standard library:
-#   ABCMixin          abstract initialize / validate / to_dict interface
-#   abstract_class    decorator that converts any class into an ABC
-#   abstractdataclass @dataclass with ABCMeta built in
-#   ABCEnum / ABCIntEnum / ABCFlag / ABCIntFlag
-#                     Enum variants with abstract-method support
-#   ABCException / ABCWarning
-#                     abstract bases for custom exceptions and warnings
-#   AbstractLogHandler / AbstractLogFormatter / AbstractLogFilter
-#                     abstract bases for logging components
-#   AbstractRawIO / AbstractBufferedIO / AbstractTextIO
-#                     abstract bases for io stream types
-#   Sortable / Filterable / Transformable
-#                     ABC families for custom collection types
-# """
-
-def main():
+def main_in_args():
     parser = ArgumentParser(
         prog="python -m more_abc",
         description="more_abc — an extension of the abc module.",
@@ -54,11 +32,16 @@ def main():
         else:
             print(f"'{args.doc}' has no docstring.")
     elif args.list:
-        for name in sorted(__all__):
+        for name in sorted(_pkg.__all__):
             print(name)
     else:
         parser.print_help()
 
+def main_in_doc():
+    print(_pkg.__doc__)
 
 if __name__ == "__main__":
-    main()
+    # Doc or args?
+    # main_in_doc()
+    main_in_args()
+   

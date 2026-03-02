@@ -1,4 +1,4 @@
-# """Type stubs for `more_abc.abc_json`."""
+# Type stubs for `more_abc.abc_json`.
 
 import json
 from typing import Any, Iterator

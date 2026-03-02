@@ -76,7 +76,7 @@ ABCclassType = type(ABC)
 ABCMetaclassType = type(ABCMeta)
 # I tried to pass him an docstring and something 
 # went wrong with the error reporting, but now it's gone. 
-# It should be somewhat similar to the `types`` module.
+# It should be somewhat similar to the `types` module.
 # ======================================================================
 
 # ======================================================================
@@ -94,6 +94,7 @@ ABCMetaclassType = type(ABCMeta)
 #         print("running")
 #     def stop(self): 
 #         print("stopped")
+
 def abstract_class(*method_names):
     """
     Class decorator that converts a regular class into an ABC and marks

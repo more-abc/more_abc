@@ -52,7 +52,7 @@ From this package:
     Transformable         -- final ABC combining BaseTransformable + TransformableMixin
 
 Re-exported from `abc` module:
-    ABC, ABCMeta, abstractmethod, get_cache_token
+    ABC, ABCMeta, abstractmethod, get_cache_token, update_abstractmethods
 """
 
 import sys
@@ -60,7 +60,8 @@ import abc
 from abc import (ABC,
                  ABCMeta,
                  abstractmethod,
-                 get_cache_token)  # `get_cache_token`? What it this?
+                 get_cache_token, 
+                 update_abstractmethods)  # A new thing
 
 # Do you know why there are still many other extensions 
 # in my code even though there is clearly a `more.py` file?
@@ -133,9 +134,10 @@ __all__ = ["ABCMixin",
            "ABC",
            "ABCMeta",
            "abstractmethod",
-           "get_cache_token"]
+           "get_cache_token",
+           "update_abstractmethods"]
 
-__version__ = "2.2.0"
+__version__ = "2.2.1"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "GPL-3.0"
 # Can be development / stable / deprecated
@@ -146,23 +148,58 @@ __title__ = "more_abc"
 __description__ = "extension of the `abc` and `collections.abc` module"
 
 
-# Wrapper of the abc module that is compatible with Python
-class ABCCompat(object):
-    """Compatibility shim that mirrors all public symbols from :mod:`abc`.
-
-    All non-underscore attributes of the standard :mod:`abc` module are copied
-    onto this class, then injected into the ``more_abc`` namespace via
-    ``sys.modules``.  This lets users import everything ABC-related from a
-    single package.
-    """
-
-for attr in dir(abc):
-    if not attr.startswith('_'):
-        setattr(ABCCompat, attr, getattr(abc, attr))
-
 if sys.version_info >= (3, 4):
-    ABCCompat.ABC = abc.ABC # type: ignore
+    ABC = abc.ABC
+    get_cache_token = abc.get_cache_token
 else:
-    ABCCompat.ABC = abc.ABC # type: ignore
+    class ABC(metaclass=ABCMeta):
+        """
+        Helper class that provides a standard way to create an ABC using
+        inheritance.
+        """
+        __slots__ = ()
 
-sys.modules[__name__].__dict__.update(ABCCompat.__dict__)
+    def get_cache_token():
+        """
+        Returns the current ABC cache token.
+
+        token is an opaque object (supporting equality testing) identifying the
+        current version of the ABC cache for virtual subclasses. The token changes
+        with every call to ``register()`` on any ABC.
+        """
+        return abc.ABCMeta._abc_invalidation_counter
+    
+if sys.version_info >= (3, 10):
+    update_abstractmethods = abc.update_abstractmethods
+else:
+    def update_abstractmethods(cls):
+        """
+        Recalculate the set of abstract methods of an abstract class.
+        If a class has had one of its abstract methods implemented after the
+        class was created, the method will not be considered implemented until
+        this function is called. Alternatively, if a new abstract method has been
+        added to the class, it will only be considered an abstract method of the
+        class after this function is called.
+
+        This function should be called before any use is made of the class,
+        usually in class decorators that add methods to the subject class.
+
+        Returns cls, to allow usage as a class decorator.
+
+        If cls is not an instance of ABCMeta, does nothing.
+        """
+        if not hasattr(cls, '__abstractmethods__'):
+            return cls
+
+        abstracts = set()
+        for scls in cls.__bases__:
+            for name in getattr(scls, '__abstractmethods__', ()):
+                value = getattr(cls, name, None)
+                if getattr(value, "__isabstractmethod__", False):
+                    abstracts.add(name)
+
+        for name, value in cls.__dict__.items():
+            if getattr(value, "__isabstractmethod__", False):
+                abstracts.add(name)
+        cls.__abstractmethods__ = frozenset(abstracts)
+        return cls

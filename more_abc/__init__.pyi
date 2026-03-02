@@ -1,7 +1,8 @@
 from abc import (ABC as ABC,
                  ABCMeta as ABCMeta,
                  abstractmethod as abstractmethod,
-                 get_cache_token as get_cache_token)
+                 get_cache_token as get_cache_token,
+                 update_abstractmethods as update_abstractmethods)
 from .more import (ABCMixin,
                    ABCclassType,
                    ABCMetaclassType,
@@ -59,7 +60,8 @@ __all__ = ["ABCMixin",
            "ABC",
            "ABCMeta",
            "abstractmethod",
-           "get_cache_token"]
+           "get_cache_token",
+           "update_abstractmethods"]
 
 __author__: str
 __license__: str
@@ -67,5 +69,3 @@ __status__: str
 __title__: str
 __description__: str
 __version__: str
-
-class ABCCompat(object): ...
