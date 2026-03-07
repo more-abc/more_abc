@@ -46,13 +46,13 @@ print(repr(user))        # User({'name': 'Alice', 'age': 30, 'active': True})
 
 ### ABCException
 
-`ABCException` is an abstract base for custom exceptions. Subclasses must implement `_get_message()`.
+`ABCException` is an abstract base for custom exceptions. Subclasses must implement `get_message()`.
 
 ```python
 from more_abc import ABCException
 
 class NotFoundError(ABCException):
-    def _get_message(self) -> str:
+    def get_message(self) -> str:
         return f"Class {self.cls!r} was not found."
 
 raise NotFoundError(cls="MyClass")
@@ -68,7 +68,7 @@ import warnings
 from more_abc import ABCWarning
 
 class DeprecatedWarning(ABCWarning):
-    def _get_message(self) -> str:
+    def get_message(self) -> str:
         return f"{self.cls!r} is deprecated and will be removed in a future version."
 
 warnings.warn(DeprecatedWarning(cls="OldClass"))

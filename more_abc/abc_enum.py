@@ -2,12 +2,13 @@
 
 from abc import ABCMeta
 from enum import Enum, EnumMeta, IntEnum, Flag, IntFlag
+from .devtools import abc_logger
 
 __all__ = ["ABCEnumMeta", "ABCEnum", "ABCIntEnum", "ABCFlag", "ABCIntFlag"]
 
 
-# It's just a very simple wrap-up. 
-# I'm not sure if this can even be called "packaging" — it's merely the 
+# It's just a very simple wrap-up.
+# I'm not sure if this can even be called "packaging" — it's merely the
 # inheritance and encapsulation of a class.
 class ABCEnumMeta(ABCMeta, EnumMeta):
     """Combined metaclass of :class:`~abc.ABCMeta` and :class:`~enum.EnumMeta`.
@@ -16,7 +17,11 @@ class ABCEnumMeta(ABCMeta, EnumMeta):
     :func:`~abc.abstractmethod`.  You rarely need to use this directly —
     prefer subclassing :class:`ABCEnum` instead.
     """
-    pass   # Check out these simple encapsulations!
+    def __new__(mcs, name, bases, namespace, **kwargs):
+        abc_logger.debug("ABCEnumMeta.__new__: creating class %r", name)
+        cls = super().__new__(mcs, name, bases, namespace, **kwargs)
+        abc_logger.debug("  -> %r created", cls)
+        return cls
 
 
 class ABCEnum(Enum, metaclass=ABCEnumMeta):
@@ -25,7 +30,9 @@ class ABCEnum(Enum, metaclass=ABCEnumMeta):
     Subclass this instead of :class:`~enum.Enum` when you want to enforce
     that concrete enum subclasses implement certain methods.
     """
-    pass
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        abc_logger.debug("ABCEnum subclassed: %r", cls)
 
 
 class ABCIntEnum(IntEnum, metaclass=ABCEnumMeta):
@@ -34,7 +41,9 @@ class ABCIntEnum(IntEnum, metaclass=ABCEnumMeta):
     Members compare equal to their integer values, while still allowing
     abstract-method enforcement via :func:`~abc.abstractmethod`.
     """
-    pass
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        abc_logger.debug("ABCIntEnum subclassed: %r", cls)
 
 
 class ABCFlag(Flag, metaclass=ABCEnumMeta):
@@ -43,7 +52,9 @@ class ABCFlag(Flag, metaclass=ABCEnumMeta):
     Supports bitwise combination of members, while still allowing
     abstract-method enforcement via :func:`~abc.abstractmethod`.
     """
-    pass
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        abc_logger.debug("ABCFlag subclassed: %r", cls)
 
 
 class ABCIntFlag(IntFlag, metaclass=ABCEnumMeta):
@@ -52,4 +63,6 @@ class ABCIntFlag(IntFlag, metaclass=ABCEnumMeta):
     Members are integers and support bitwise operations, while still
     allowing abstract-method enforcement via :func:`~abc.abstractmethod`.
     """
-    pass
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        abc_logger.debug("ABCIntFlag subclassed: %r", cls)

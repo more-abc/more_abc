@@ -2,6 +2,7 @@
 
 import abc
 import json
+from .devtools import abc_logger
 
 __all__ = [
     "AbstractJSONEncoder",
@@ -17,18 +18,24 @@ class AbstractJSONEncoder(json.JSONEncoder, metaclass=abc.ABCMeta):
     a consistent interface. Subclasses must implement `default`, `encode` and `iterencode`.
     """
 
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        abc_logger.debug("AbstractJSONEncoder subclassed: %r", cls)
+
     @abc.abstractmethod
     def default(self, o):
         """
         Return a serializable object for *o*.
         """
+        abc_logger.debug("%r.default(o=%r) called", self.__class__.__name__, o)
         raise NotImplementedError("Subclasses must implement default()")
-    
+
     @abc.abstractmethod
     def encode(self, o):
         """
         Return a JSON string representation of *o*.
         """
+        abc_logger.debug("%r.encode(o=%r) called", self.__class__.__name__, o)
         raise NotImplementedError("Subclasses must implement encode()")
 
     @abc.abstractmethod
@@ -36,8 +43,9 @@ class AbstractJSONEncoder(json.JSONEncoder, metaclass=abc.ABCMeta):
         """
         Encode *o* and yield each string representation as available.
         """
+        abc_logger.debug("%r.iterencode(o=%r, _one_shot=%r) called",
+                         self.__class__.__name__, o, _one_shot)
         raise NotImplementedError("Subclasses must implement iterencode()")
-
 
 
 class AbstractJSONDecoder(json.JSONDecoder, metaclass=abc.ABCMeta):
@@ -48,11 +56,16 @@ class AbstractJSONDecoder(json.JSONDecoder, metaclass=abc.ABCMeta):
     a consistent interface. Subclasses must implement `decode` and `raw_decode`.
     """
 
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        abc_logger.debug("AbstractJSONDecoder subclassed: %r", cls)
+
     @abc.abstractmethod
     def decode(self, s): # type: ignore
         """
         Return the Python representation of *s*.
         """
+        abc_logger.debug("%r.decode(s=%r) called", self.__class__.__name__, s)
         raise NotImplementedError("Subclasses must implement decode()")
 
     @abc.abstractmethod
@@ -60,4 +73,6 @@ class AbstractJSONDecoder(json.JSONDecoder, metaclass=abc.ABCMeta):
         """
         Decode a JSON document from *s* starting at index *idx*.
         """
+        abc_logger.debug("%r.raw_decode(s=%r, idx=%r) called",
+                         self.__class__.__name__, s, idx)
         raise NotImplementedError("Subclasses must implement raw_decode()")

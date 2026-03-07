@@ -1,20 +1,19 @@
 """Core functions (And `types` module like) of the module are contained in this file."""
 
-#                              __      
+#                              __
 #   __ _  ___  _______   ___ _/ /  ____
 #  /  ' \/ _ \/ __/ -_) / _ `/ _ \/ __/
-# /_/_/_/\___/_/  \__/__\_,_/_.__/\__/ 
-#                   /___/              
+# /_/_/_/\___/_/  \__/__\_,_/_.__/\__/
+#                   /___/
 
 from abc import ABC, ABCMeta, abstractmethod
+from .devtools import abc_logger
 
 __all__ = ["ABCMixin",
            "ABCclassType",
            "ABCMetaclassType",
            "ABCException",
-           "ABCWarning",
-           "abstract_class",
-           "abstractproperty"]
+           "ABCWarning"]
 
 # All the ABC classes.
 # ======================================================================
@@ -27,29 +26,37 @@ class ABCMixin(metaclass=ABCMeta):
     common functionality that works with those abstract methods.
     """
 
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        abc_logger.debug("ABCMixin subclassed: %r", cls)
+
     @abstractmethod
     def initialize(self):
         """Initialize the instance. Must be implemented by subclasses."""
-        pass
+        abc_logger.debug("%r.initialize() called", self.__class__.__name__)
 
     @abstractmethod
     def validate(self):
         """Validate the instance state. Must be implemented by subclasses."""
-        pass
+        abc_logger.debug("%r.validate() called", self.__class__.__name__)
 
     @abstractmethod
     def to_dict(self):
         """Convert instance to dictionary. Must be implemented by subclasses."""
-        pass
+        abc_logger.debug("%r.to_dict() called", self.__class__.__name__)
 
     def is_valid(self):
         """
         Check if the instance is valid.
         Concrete method that uses the abstract validate method.
         """
+        abc_logger.debug("%r.is_valid() called", self.__class__.__name__)
         try:
-            return self.validate()
-        except Exception:
+            result = self.validate()
+            abc_logger.debug("  -> %r", result)
+            return result
+        except Exception as e:
+            abc_logger.debug("  validate() raised %r, returning False", e)
             return False
 
     def get_info(self):
@@ -57,6 +64,7 @@ class ABCMixin(metaclass=ABCMeta):
         Get instance information including validation status.
         Concrete method that combines abstract methods.
         """
+        abc_logger.debug("%r.get_info() called", self.__class__.__name__)
         return {
             "data": self.to_dict(),
             "is_valid": self.is_valid(),
@@ -74,114 +82,42 @@ class ABCMixin(metaclass=ABCMeta):
 # I just did a light wrapper around both of them.
 ABCclassType = type(ABC)
 ABCMetaclassType = type(ABCMeta)
-# I tried to pass him an docstring and something 
-# went wrong with the error reporting, but now it's gone. 
+# I tried to pass him an docstring and something
+# went wrong with the error reporting, but now it's gone.
 # It should be somewhat similar to the `types` module.
-# ======================================================================
-
-# ======================================================================
-#  To facilitate understanding, I have made an exception 
-# to add usage examples for this function.
-
-# Example:
-# @abstract_class('run', 'stop')
-# class Worker:
-#     def run(self): ...
-#     def stop(self): ...
-
-# class MyWorker(Worker):
-#     def run(self): 
-#         print("running")
-#     def stop(self): 
-#         print("stopped")
-
-def abstract_class(*method_names):
-    """
-    Class decorator that converts a regular class into an ABC and marks
-    the specified method names as abstract methods.
-    """
-    def decorator(cls):
-        namespace = {}
-        for key, value in vars(cls).items():
-            if key in ('__dict__', '__weakref__'):
-                continue
-            if key in method_names and callable(value):
-                namespace[key] = abstractmethod(value)
-            else:
-                namespace[key] = value
-
-        for name in method_names:
-            if name not in namespace:
-                def _stub(self):
-                    pass
-                _stub.__name__ = name
-                _stub.__qualname__ = f"{cls.__qualname__}.{name}"
-                namespace[name] = abstractmethod(_stub)
-
-        new_cls = ABCMeta(cls.__name__, cls.__bases__, namespace)
-        new_cls.__qualname__ = cls.__qualname__
-        new_cls.__module__ = cls.__module__
-        return new_cls
-
-    return decorator
-# ======================================================================
-
-# ======================================================================
-def abstractproperty(read_only=True):
-    """
-    Enhanced replacement for the deprecated ``abc.abstractproperty``.
-
-    Defines an abstract property on an ABC. Subclasses must provide a
-    concrete ``@property`` implementation. When *read_only* is ``False``,
-    subclasses must also implement a setter.
-    """
-    def decorator(func):
-        prop = property(abstract_func := abstractmethod(func))
-        prop.__is_abstract_property__ = True  # type: ignore[attr-defined]
-        prop.__abstract_read_only__ = read_only  # type: ignore[attr-defined]
-
-        if not read_only:
-            original_setter = prop.setter
-
-            def setter(fset):
-                abstract_fset = abstractmethod(fset)
-                return original_setter(abstract_fset)
-
-            prop = prop.__class__(
-                prop.fget,
-                prop.fset,
-                prop.fdel,
-                prop.__doc__,
-            )
-            prop.setter = setter  # type: ignore[method-assign]
-
-        return prop
-
-    return decorator
-# ======================================================================
 
 # ======================================================================
 class ABCException(Exception, metaclass=ABCMeta):
     """General Exception for ABC Scenarios."""
 
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        abc_logger.debug("ABCException subclassed: %r", cls)
+
     def __init__(self, cls=None):
+        abc_logger.debug("%r.__init__(cls=%r)", self.__class__.__name__, cls)
         self.cls = cls
-        super().__init__(self._get_message())
+        super().__init__(self.get_message())
 
     @abstractmethod
-    def _get_message(self):
+    def get_message(self):
         """Return the error message. Must be implemented by subclasses."""
-        pass
+        abc_logger.debug("%r.get_message() called", self.__class__.__name__)
 
 class ABCWarning(Warning, metaclass=ABCMeta):
     """General Warning for ABC Scenarios."""
 
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        abc_logger.debug("ABCWarning subclassed: %r", cls)
+
     def __init__(self, cls=None):
+        abc_logger.debug("%r.__init__(cls=%r)", self.__class__.__name__, cls)
         self.cls = cls
-        super().__init__(self._get_message())
+        super().__init__(self.get_message())
 
     @abstractmethod
-    def _get_message(self):
+    def get_message(self):
         """Return the warning message. Must be implemented by subclasses."""
-        pass
+        abc_logger.debug("%r.get_message() called", self.__class__.__name__)
 # ======================================================================

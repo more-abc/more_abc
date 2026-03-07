@@ -1,9 +1,6 @@
 # Copyright (C) 2026 Evan Yang <quantbit@126.com>
 
-# GNU GENERAL PUBLIC LICENSE
-# Version 3, 29 June 2007
-
-# Copyright (C) [2026] [aiwonderland/more-abc]
+# GNU GENERAL PUBLIC LICENSE (Version 3)
 
 # This module refers to PEP 3119.
 # See https://peps.python.org/pep-3119/ or https://legacy.python.org/dev/peps/pep-3119/
@@ -53,7 +50,7 @@ From this package:
 
 Re-exported from `abc` module:
     ABC, ABCMeta, abstractmethod, get_cache_token, update_abstractmethods
-from `typing_extensions` module (version < 4.0):
+from `typing_extensions` module (version < 4.10.0):
     abstractasyncmethod
 
 """
@@ -64,7 +61,7 @@ from abc import (ABC,
                  ABCMeta,
                  abstractmethod,
                  get_cache_token, 
-                 update_abstractmethods)  # A new thing
+                 update_abstractmethods)
 
 # Do you know why there are still many other extensions 
 # in my code even though there is clearly a `more.py` file?
@@ -72,9 +69,8 @@ from .more import (ABCMixin,
                    ABCclassType,
                    ABCMetaclassType,
                    ABCException,
-                   ABCWarning,
-                   abstract_class,
-                   abstractproperty)  # New one
+                   ABCWarning)  
+from .decorator import abstract_class, abstractproperty
 from .abc_dataclasses import abstractdataclass
 
 # It is unclear whether the code contained 
@@ -101,6 +97,15 @@ from .collections_abc import (BaseSortable,
                               BaseTransformable, 
                               TransformableMixin,
                               Transformable)
+from . import devtools
+from .devtools import abc_logger
+
+abc_logger.debug("more_abc.__init__: starting import")
+
+if sys.version_info >= (3, 14):
+    import annotationlib
+
+_DevMode_func = devtools.__all__
 
 __all__ = ["ABCMixin",
            "ABCclassType",
@@ -140,9 +145,11 @@ __all__ = ["ABCMixin",
            "get_cache_token",
            "update_abstractmethods",
            # re-exported from old typing_extensions
-           "abstractasyncmethod"]
+           "abstractasyncmethod",
+           # Development mode toggle switch   
+           "DevMode"]
 
-__version__ = "2.2.2"
+__version__ = "2.2.3"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "GPL-3.0"
 # Can be development / stable / deprecated
@@ -152,11 +159,28 @@ __title__ = "more_abc"
 # more_abc™
 __description__ = "extension of the `abc` and `collections.abc` module"
 
+DevMode = False
+"""
+Development mode **toggle switch**.
+
+If True, you can use and import the function 
+that only can use in development mode.
+"""
+if not isinstance(DevMode, bool):
+    DevMode = False
+
+if DevMode == True:
+    abc_logger.debug("DevMode is enabled")
+    __all__.append(_DevMode_func) # type: ignore
+else:
+    abc_logger.debug("DevMode is disabled")
 
 if sys.version_info >= (3, 4):
     ABC = abc.ABC
     get_cache_token = abc.get_cache_token
+    abc_logger.debug("ABC, get_cache_token: using stdlib (Python >= 3.4)")
 else:
+    abc_logger.debug("ABC, get_cache_token: using compat shim (Python < 3.4)")
     class ABC(metaclass=ABCMeta):
         """
         Helper class that provides a standard way to create an ABC using
@@ -172,11 +196,16 @@ else:
         current version of the ABC cache for virtual subclasses. The token changes
         with every call to ``register()`` on any ABC.
         """
-        return abc.ABCMeta._abc_invalidation_counter
+        abc_logger.debug("get_cache_token() called (compat shim)")
+        result = abc.ABCMeta._abc_invalidation_counter
+        abc_logger.debug("  -> %r", result)
+        return result
     
 if sys.version_info >= (3, 10):
     update_abstractmethods = abc.update_abstractmethods
+    abc_logger.debug("update_abstractmethods: using stdlib (Python >= 3.10)")
 else:
+    abc_logger.debug("update_abstractmethods: using compat shim (Python < 3.10)")
     def update_abstractmethods(cls):
         """
         Recalculate the set of abstract methods of an abstract class.
@@ -193,7 +222,9 @@ else:
 
         If cls is not an instance of ABCMeta, does nothing.
         """
+        abc_logger.debug("update_abstractmethods(%r)", cls)
         if not hasattr(cls, '__abstractmethods__'):
+            abc_logger.debug("  %r has no __abstractmethods__, skipping", cls)
             return cls
 
         abstracts = set()
@@ -207,30 +238,39 @@ else:
             if getattr(value, "__isabstractmethod__", False):
                 abstracts.add(name)
         cls.__abstractmethods__ = frozenset(abstracts)
+        abc_logger.debug("  %r updated __abstractmethods__: %s", cls, cls.__abstractmethods__)
         return cls
 
 if sys.version_info >= (3, 10):
-    abstractasyncmethod = abc.abstractmethod
-    abstractasyncmethod.__doc__ = f"""
-    A decorator indicating an abstract async method.
-
-    Works like `abc.abstractmethod`, but for async methods.
-"""
-else:
+    abc_logger.debug("abstractasyncmethod: using stdlib wrapper (Python >= 3.10)")
     def abstractasyncmethod(func):
-        """        
+        """
         A decorator indicating an abstract async method.
 
         Works like `abc.abstractmethod`, but for async methods.
         """
+        abc_logger.debug("abstractasyncmethod(%r)", func)
+        result = abc.abstractmethod(func)
+        abc_logger.debug("  -> %r", result)
+        return result
+else:
+    abc_logger.debug("abstractasyncmethod: using compat shim (Python < 3.10)")
+    def abstractasyncmethod(func):
+        """
+        A decorator indicating an abstract async method.
+
+        Works like `abc.abstractmethod`, but for async methods.
+        """
+        abc_logger.debug("abstractasyncmethod(%r) [compat shim]", func)
         if func is None:
             return abstractasyncmethod  # Support @abstractasyncmethod (no args)
-        
+
         func = abstractmethod(func)
 
         setattr(func, "__is_async_abstract__", True)
 
         if func.__doc__ is None:
             func.__doc__ = "Async abstract method (must implement with async def)"
-        
+
+        abc_logger.debug("  -> %r", func)
         return func
