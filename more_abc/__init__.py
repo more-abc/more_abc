@@ -149,6 +149,7 @@ __all__ = ["ABCMixin",
            "abstract_class",
            "abstractproperty",
            "abstract_lru_cache",
+           "abstractasyncmethod",
            "abstractdataclass",
            "ABCEnumMeta",
            "ABCEnum",
@@ -179,13 +180,12 @@ __all__ = ["ABCMixin",
            "abstractmethod",
            "get_cache_token",
            "update_abstractmethods",
-           # re-exported from old typing_extensions
-           "abstractasyncmethod",
            # Development mode toggle switch   
            "DevMode"]
 
-__version__ = "2.2.7"
-__version_tuple__ = (2, 2, 7)
+__version__ = "2.2.8"
+__version_tuple__ = (2, 2, 8)
+__int_version__ = 45
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "GPL-3.0"
 # Can be development / stable / deprecated
