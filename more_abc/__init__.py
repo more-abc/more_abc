@@ -6,53 +6,87 @@
 # See https://peps.python.org/pep-3119/ or https://legacy.python.org/dev/peps/pep-3119/
 
 """
-This module is an extension of the `abc` and `collections.abc` module,
-with many similar features added.
+more_abc — an extension of the :mod:`abc` and :mod:`collections.abc` modules.
 
-Public symbols
---------------
-From this package:
-    ABCMixin              -- ABC mixin with abstract initialize/validate/to_dict
-    ABCclassType          -- type alias: type(ABC)
-    ABCMetaclassType      -- type alias: type(ABCMeta)
+Provides abstract base classes, decorators, and utilities for defining
+clean abstract interfaces in Python.
+
+Core helpers:
+    ABCMixin              -- ABC mixin with abstract `initialize` / `validate` / `to_dict` / `is_valid` / `get_info`
+
+    ABCclassType          -- type alias of ABC
+
+    ABCMetaclassType      -- type alias of ABCMeta
+
     ABCException          -- abstract base for custom exceptions
+
     ABCWarning            -- abstract base for custom warnings
-    abstract_class        -- decorator that turns a class into an ABC with specified abstract methods
-    abstractproperty      -- decorator that defines an abstract property (read-only or read-write)
-    abstractdataclass     -- @dataclass + ABCMeta combined decorator
-    
+
+
+Decorators:
+    abstract_class        -- class decorator: turns a plain class into an ABC with named abstract methods
+
+    abstractproperty      -- decorator: defines a read-only or read-write abstract property
+
+    abstract_lru_cache    -- decorator: combines `@lru_cache` with `@abstractmethod`
+
+    abstractdataclass     -- decorator: combines `@dataclass` with `ABCMeta`
+
+
+Enum ABCs:
     ABCEnumMeta           -- combined ABCMeta + EnumMeta metaclass
+
     ABCEnum               -- Enum base class with abstract-method support
+
     ABCIntEnum            -- IntEnum base class with abstract-method support
+
     ABCFlag               -- Flag base class with abstract-method support
+
     ABCIntFlag            -- IntFlag base class with abstract-method support
 
-    AbstractLogHandler    -- abstract base for logging.Handler
-    AbstractLogFormatter  -- abstract base for logging.Formatter
-    AbstractLogFilter     -- abstract base for logging.Filter
+Logging ABCs:
+    AbstractLogHandler    -- abstract base for `logging.Handler`
 
-    AbstractRawIO         -- abstract base for io.RawIOBase
-    AbstractBufferedIO    -- abstract base for io.BufferedIOBase
-    AbstractTextIO        -- abstract base for io.TextIOBase
+    AbstractLogFormatter  -- abstract base for `logging.Formatter`
 
-    AbstractJSONDecoder   -- abstract base for json.JSONDecoder
-    AbstractJSONEncoder   -- abstract base for json.JSONEncoder
+    AbstractLogFilter     -- abstract base for `logging.Filter`
 
-    BaseSortable          -- minimal abstract interface for sortable containers
-    SortableMixin         -- concrete sort()/sorted() helpers
-    Sortable              -- final ABC combining BaseSortable + SortableMixin
-    BaseFilterable        -- minimal abstract interface for filterable containers
-    FilterableMixin       -- concrete filter()/reject() helpers
-    Filterable            -- final ABC combining BaseFilterable + FilterableMixin
-    BaseTransformable     -- minimal abstract interface for transformable containers
-    TransformableMixin    -- concrete map() helper
-    Transformable         -- final ABC combining BaseTransformable + TransformableMixin
+I/O ABCs:
+    AbstractRawIO         -- abstract base for `io.RawIOBase`
+
+    AbstractBufferedIO    -- abstract base for `io.BufferedIOBase`
+
+    AbstractTextIO        -- abstract base for `io.TextIOBase`
+
+JSON ABCs:
+    AbstractJSONEncoder   -- abstract base for `json.JSONEncoder`
+
+    AbstractJSONDecoder   -- abstract base for `json.JSONDecoder`
+
+Collections ABCs:
+    BaseSortable          -- minimal abstract interface: `__sort__`
+
+    SortableMixin         -- concrete helpers: `sort()`, `sorted()`
+
+    Sortable              -- final ABC = BaseSortable + SortableMixin
+
+    BaseFilterable        -- minimal abstract interface: `__filter__`
+
+    FilterableMixin       -- concrete helpers: `filter()`, `reject()`
+
+    Filterable            -- final ABC = BaseFilterable + FilterableMixin
+
+    BaseTransformable     -- minimal abstract interface: `__transform__`
+
+    TransformableMixin    -- concrete helper: `map()`
+
+    Transformable         -- final ABC = BaseTransformable + TransformableMixin
 
 Re-exported from `abc` module:
     ABC, ABCMeta, abstractmethod, get_cache_token, update_abstractmethods
-from `typing_extensions` module (version < 4.10.0):
-    abstractasyncmethod
 
+Defined here (compatible with all supported Python versions):
+    abstractasyncmethod   -- `@abstractmethod` for `async def` methods
 """
 
 import sys
@@ -70,7 +104,7 @@ from .more import (ABCMixin,
                    ABCMetaclassType,
                    ABCException,
                    ABCWarning)  
-from .decorator import abstract_class, abstractproperty
+from .decorator import (abstract_class, abstractproperty, abstract_lru_cache)
 from .abc_dataclasses import abstractdataclass
 
 # It is unclear whether the code contained 
@@ -97,15 +131,15 @@ from .collections_abc import (BaseSortable,
                               BaseTransformable, 
                               TransformableMixin,
                               Transformable)
-from . import devtools
-from .devtools import abc_logger
+from . import _devtools
+from ._devtools import abc_logger
 
 abc_logger.debug("more_abc.__init__: starting import")
 
 if sys.version_info >= (3, 14):
     import annotationlib
 
-_DevMode_func = devtools.__all__
+_DevMode_func = _devtools.__all__
 
 __all__ = ["ABCMixin",
            "ABCclassType",
@@ -114,6 +148,7 @@ __all__ = ["ABCMixin",
            "ABCWarning",
            "abstract_class",
            "abstractproperty",
+           "abstract_lru_cache",
            "abstractdataclass",
            "ABCEnumMeta",
            "ABCEnum",
@@ -149,7 +184,7 @@ __all__ = ["ABCMixin",
            # Development mode toggle switch   
            "DevMode"]
 
-__version__ = "2.2.3"
+__version__ = "2.2.4"
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "GPL-3.0"
 # Can be development / stable / deprecated

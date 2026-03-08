@@ -2,7 +2,7 @@
 
 import abc
 import io
-from .devtools import abc_logger
+from ._devtools import abc_logger
 
 __all__ = [
     "AbstractRawIO",

@@ -2,7 +2,7 @@
 
 import abc
 import json
-from .devtools import abc_logger
+from ._devtools import abc_logger
 
 __all__ = [
     "AbstractJSONEncoder",

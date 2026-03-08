@@ -7,7 +7,7 @@
 #                   /___/
 
 from abc import ABC, ABCMeta, abstractmethod
-from .devtools import abc_logger
+from ._devtools import abc_logger
 
 __all__ = ["ABCMixin",
            "ABCclassType",
@@ -16,7 +16,6 @@ __all__ = ["ABCMixin",
            "ABCWarning"]
 
 # All the ABC classes.
-# ======================================================================
 class ABCMixin(metaclass=ABCMeta):
     """
     A comprehensive ABC Mixin class that provides abstract method patterns
@@ -74,9 +73,7 @@ class ABCMixin(metaclass=ABCMeta):
     def __repr__(self):
         """String representation using to_dict method."""
         return f"{self.__class__.__name__}({self.to_dict()})"
-# ======================================================================
 
-# ======================================================================
 # Like `types` module.
 
 # I just did a light wrapper around both of them.
@@ -86,7 +83,6 @@ ABCMetaclassType = type(ABCMeta)
 # went wrong with the error reporting, but now it's gone.
 # It should be somewhat similar to the `types` module.
 
-# ======================================================================
 class ABCException(Exception, metaclass=ABCMeta):
     """General Exception for ABC Scenarios."""
 
@@ -120,4 +116,3 @@ class ABCWarning(Warning, metaclass=ABCMeta):
     def get_message(self):
         """Return the warning message. Must be implemented by subclasses."""
         abc_logger.debug("%r.get_message() called", self.__class__.__name__)
-# ======================================================================

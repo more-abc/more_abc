@@ -1,19 +1,32 @@
+"""Type stubs for more_abc.abc_enum."""
+
 from abc import ABCMeta
 from enum import Enum, EnumMeta, IntEnum, Flag, IntFlag
-from typing import Any
 
 __all__ = ["ABCEnumMeta", "ABCEnum", "ABCIntEnum", "ABCFlag", "ABCIntFlag"]
 
-class ABCEnumMeta(ABCMeta, EnumMeta): ...
+
+class ABCEnumMeta(ABCMeta, EnumMeta):
+    """Combined metaclass of :class:`~abc.ABCMeta` and
+    :class:`~enum.EnumMeta`."""
+    ...
+
 
 class ABCEnum(Enum, metaclass=ABCEnumMeta):
-    def __new__(cls, value: Any) -> ABCEnum: ...
+    """An :class:`~enum.Enum` base class that supports abstract methods."""
+    ...
+
 
 class ABCIntEnum(IntEnum, metaclass=ABCEnumMeta):
-    def __new__(cls, value: int) -> ABCIntEnum: ...
+    """An :class:`~enum.IntEnum` base class that supports abstract methods."""
+    ...
+
 
 class ABCFlag(Flag, metaclass=ABCEnumMeta):
-    def __new__(cls, value: int) -> ABCFlag: ...
+    """A :class:`~enum.Flag` base class that supports abstract methods."""
+    ...
+
 
 class ABCIntFlag(IntFlag, metaclass=ABCEnumMeta):
-    def __new__(cls, value: int) -> ABCIntFlag: ...
+    """An :class:`~enum.IntFlag` base class that supports abstract methods."""
+    ...

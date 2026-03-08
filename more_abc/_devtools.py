@@ -9,7 +9,12 @@ __all__ = [
     "missing_methods",
     "abstract_tree",
     "abc_logger",
-    "SeeLogging"
+    "SeeLogging",
+    "ADM",
+    "ADM_STANDARD",
+    "ADM_DEBUG",
+    "ADM_RELEASE",
+    "set_adm",
 ]
 
 _logger = logging.getLogger(__name__)
@@ -45,8 +50,59 @@ if not isinstance(SeeLogging, bool):
 if SeeLogging == True:
     abc_logger.setLevel(logging.DEBUG)
 
-def get_abstract_methods(cls):
+# ---------------------------------------------------------------------------
+# ADM — Advanced Development Mode level constants
+# ---------------------------------------------------------------------------
 
+ADM_STANDARD      = 1
+"""Standard Mode — normal operation, all logging silenced (``CRITICAL``)."""
+
+ADM_DEBUG         = 2
+"""Debug Mode    — verbose debug output enabled (``DEBUG``)."""
+
+ADM_RELEASE       = 3
+"""Release Mode  — production-like, only warnings and above (``WARNING``)."""
+
+# Mapping from ADM level to Python logging level
+_ADM_LOG_LEVELS = {
+    ADM_STANDARD: logging.CRITICAL,
+    ADM_DEBUG:    logging.DEBUG,
+    ADM_RELEASE:  logging.WARNING,
+}
+
+
+class _ADMLevel(int):
+    """Advanced Development Mode (ADM) level.
+
+    An int subclass so ADM.__doc__ returns this text at runtime.
+    Behaves identically to a plain int in every other respect.
+
+    Controls how verbosely the more_abc.devtools logger reports activity.
+    Use one of the ADM_* integer constants, or call set_adm() to change
+    the level at runtime.
+    """
+    # Value  Constant      Logger level
+    # -----  ------------  ------------
+    # 1      ADM_STANDARD  CRITICAL
+    # 2      ADM_DEBUG     DEBUG
+    # 3      ADM_RELEASE   WARNING
+
+    # NOTE: SeeLogging=True takes priority — the logger stays at DEBUG
+    # regardless of the ADM level.
+    
+    __slots__ = ()
+
+
+ADM = _ADMLevel(ADM_STANDARD)
+
+if not isinstance(ADM, int) or int(ADM) not in _ADM_LOG_LEVELS:
+    ADM = _ADMLevel(ADM_STANDARD)
+
+# Apply ADM-based log level only when SeeLogging hasn't already forced DEBUG.
+if not SeeLogging and ADM != ADM_STANDARD:
+    abc_logger.setLevel(_ADM_LOG_LEVELS[int(ADM)])
+
+def get_abstract_methods(cls):
     """
     Return the frozenset of abstract method names defined on *cls*.
 
@@ -56,6 +112,7 @@ def get_abstract_methods(cls):
     Example::
 
         >>> from abc import ABC, abstractmethod
+        >>> from more_abc import get_abstract_methods
         >>> class Base(ABC):
         ...     @abstractmethod
         ...     def run(self): ...
@@ -78,6 +135,7 @@ def is_abstract_class(cls):
     Example::
 
         >>> from abc import ABC, abstractmethod
+        >>> from more_abc import is_abstract_class
         >>> class Base(ABC):
         ...     @abstractmethod
         ...     def run(self): ...
@@ -108,6 +166,7 @@ def check_implementation(subclass, base):
 
     Example::
 
+        >>> from more_abc import check_implementation
         >>> check_implementation(Impl, Base)
         {'implemented': frozenset({'run'}), 'missing': frozenset(), 'extra': ...}
     """
@@ -150,6 +209,7 @@ def missing_methods(subclass, base):
 
     Example::
 
+        >>> from more_abc import missing_methods
         >>> missing_methods(Impl, Base)
         frozenset()
     """
@@ -179,3 +239,27 @@ def abstract_tree(cls, *, _indent=0):
         if base is object:
             continue
         abstract_tree(base, _indent=_indent + 1)
+
+
+def set_adm(mode):
+    """Set the Advanced Development Mode level at runtime.
+
+    Adjusts the ``more_abc.devtools`` logger level according to *mode*
+    unless :data:`SeeLogging` is ``True`` (in which case the logger
+    stays at ``DEBUG`` regardless).
+
+    Example::
+
+        >>> from more_abc.devtools import set_adm, ADM_DEBUG
+        >>> set_adm(ADM_DEBUG)  # Enable verbose debug output at runtime
+    """
+    global ADM
+    if mode not in _ADM_LOG_LEVELS:
+        mode = ADM_STANDARD
+    ADM = _ADMLevel(mode)          # preserve __doc__ after reassignment
+    if not SeeLogging:
+        abc_logger.setLevel(_ADM_LOG_LEVELS[mode])
+    abc_logger.debug(
+        "set_adm(%r): logger level -> %s", mode,
+        logging.getLevelName(abc_logger.level),
+    )

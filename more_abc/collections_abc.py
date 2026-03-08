@@ -4,7 +4,7 @@ This submodule is an extension of the ABC functionality within the `collections.
 """
 
 import abc
-from .devtools import abc_logger
+from ._devtools import abc_logger
 
 __all__ = [
     "BaseSortable", "SortableMixin", "Sortable",

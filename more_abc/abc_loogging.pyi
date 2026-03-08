@@ -1,29 +1,57 @@
-# Type stubs for `more_abc.abc_loogging`.
+"""Type stubs for more_abc.abc_loogging."""
 
 import logging
-from typing import Any, Dict
+from abc import abstractmethod
+from typing import Any
 
 __all__ = ["AbstractLogHandler", "AbstractLogFormatter", "AbstractLogFilter"]
 
 
 class AbstractLogHandler(logging.Handler):
-    # """Abstract base class for log handlers, extending logging.Handler."""
+    """Abstract base class for log handlers, extending
+    :class:`logging.Handler`.
 
-    _handler_config: Dict[str, Any]
+    Subclasses must implement :meth:`configure` and :meth:`emit`.
+    """
 
-    def __init__(self, level: int = ...) -> None: ...
-    def configure(self, config: Dict[str, Any]) -> None: ...
-    def emit(self, record: logging.LogRecord) -> None: ...
+    _handler_config: dict[str, Any]
+
+    def __init__(self, level: int = logging.NOTSET) -> None: ...
+
+    @abstractmethod
+    def configure(self, config: Any) -> None:
+        """Configure the handler."""
+        ...
+
+    @abstractmethod
+    def emit(self, record: logging.LogRecord) -> None:
+        """Emit a log record."""
+        ...
+
     def close(self) -> None: ...
 
 
 class AbstractLogFormatter(logging.Formatter):
-    # """Abstract base class for log formatters, extending logging.Formatter."""
+    """Abstract base class for log formatters, extending
+    :class:`logging.Formatter`.
 
-    def format(self, record: logging.LogRecord) -> str: ...
+    Subclasses must implement :meth:`format`.
+    """
+
+    @abstractmethod
+    def format(self, record: logging.LogRecord) -> str:
+        """Format a log record into a string."""
+        ...
 
 
 class AbstractLogFilter(logging.Filter):
-    # """Abstract base class for log filters, extending logging.Filter."""
+    """Abstract base class for log filters, extending
+    :class:`logging.Filter`.
 
-    def filter(self, record: logging.LogRecord) -> bool: ...
+    Subclasses must implement :meth:`filter`.
+    """
+
+    @abstractmethod
+    def filter(self, record: logging.LogRecord) -> bool:
+        """Determine whether a log record should be processed."""
+        ...

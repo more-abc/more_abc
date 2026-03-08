@@ -2,7 +2,7 @@
 
 from abc import ABCMeta
 from enum import Enum, EnumMeta, IntEnum, Flag, IntFlag
-from .devtools import abc_logger
+from ._devtools import abc_logger
 
 __all__ = ["ABCEnumMeta", "ABCEnum", "ABCIntEnum", "ABCFlag", "ABCIntFlag"]
 

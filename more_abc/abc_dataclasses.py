@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from abc import ABC, ABCMeta
-from .devtools import abc_logger
+from ._devtools import abc_logger
 
 def _ensure_abcmeta(cls):
     """Rebuild *cls* with ABCMeta as its metaclass if it doesn't already use one."""

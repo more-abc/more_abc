@@ -1,6 +1,7 @@
-# Type stubs for `more_abc.abc_json`.
+"""Type stubs for more_abc.abc_json."""
 
 import json
+from abc import abstractmethod
 from typing import Any, Iterator
 
 __all__ = [
@@ -10,15 +11,42 @@ __all__ = [
 
 
 class AbstractJSONEncoder(json.JSONEncoder):
-    # """Abstract base class for JSON encoders, extending json.JSONEncoder."""
+    """Abstract base class for JSON encoders, extending
+    :class:`json.JSONEncoder`.
 
-    def default(self, o: Any) -> Any: ...
-    def encode(self, o: Any) -> str: ...
-    def iterencode(self, o: Any, _one_shot: bool = ...) -> Iterator[str]: ...
+    Subclasses must implement :meth:`default`, :meth:`encode`,
+    and :meth:`iterencode`.
+    """
+
+    @abstractmethod
+    def default(self, o: Any) -> Any:
+        """Return a serializable object for *o*."""
+        ...
+
+    @abstractmethod
+    def encode(self, o: Any) -> str:
+        """Return a JSON string representation of *o*."""
+        ...
+
+    @abstractmethod
+    def iterencode(self, o: Any, _one_shot: bool = False) -> Iterator[str]:
+        """Encode *o* and yield each string chunk as available."""
+        ...
 
 
 class AbstractJSONDecoder(json.JSONDecoder):
-    # """Abstract base class for JSON decoders, extending json.JSONDecoder."""
+    """Abstract base class for JSON decoders, extending
+    :class:`json.JSONDecoder`.
 
-    def decode(self, s: str, _w: Any = ...) -> Any: ...
-    def raw_decode(self, s: str, idx: int = ...) -> tuple[Any, int]: ...
+    Subclasses must implement :meth:`decode` and :meth:`raw_decode`.
+    """
+
+    @abstractmethod
+    def decode(self, s: str) -> Any:  # type: ignore[override]
+        """Return the Python representation of *s*."""
+        ...
+
+    @abstractmethod
+    def raw_decode(self, s: str, idx: int = 0) -> tuple[Any, int]:
+        """Decode a JSON document from *s* starting at index *idx*."""
+        ...

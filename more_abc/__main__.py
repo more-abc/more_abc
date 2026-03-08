@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 import more_abc as _pkg
-from .devtools import abc_logger
+from ._devtools import abc_logger
 
 def main():
     abc_logger.debug("main() called")
