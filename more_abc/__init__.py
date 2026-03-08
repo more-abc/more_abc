@@ -184,7 +184,8 @@ __all__ = ["ABCMixin",
            # Development mode toggle switch   
            "DevMode"]
 
-__version__ = "2.2.6"
+__version__ = "2.2.7"
+__version_tuple__ = (2, 2, 7)
 __author__ = "Evan Yang <quantbit@126.com>"
 __license__ = "GPL-3.0"
 # Can be development / stable / deprecated

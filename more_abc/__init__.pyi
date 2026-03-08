@@ -60,6 +60,7 @@ from ._devtools import abc_logger as abc_logger
 __all__: list[str]
 
 __version__: str
+__version_tuple__: tuple[int, int, int]
 __author__: str
 __license__: str
 __status__: str
