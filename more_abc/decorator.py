@@ -2,7 +2,7 @@
 
 from abc import abstractmethod, ABCMeta
 from functools import lru_cache, wraps
-from .devtools import abc_logger
+from ._devtools import abc_logger
 
 __all__ = [
     "abstract_class",
