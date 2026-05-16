@@ -24,13 +24,14 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
 
 [project.urls]
-Homepage = "https://github.com/aiwonderland/more_abc"
-Repository = "https://github.com/aiwonderland/more_abc"
+Homepage = "https://github.com/more-abc/more_abc"
+Repository = "https://github.com/more-abc/more_abc"
 
 [project.scripts]
 more-abc = "more_abc.__main__:main"
